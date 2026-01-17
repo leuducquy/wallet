@@ -11,7 +11,7 @@ import Components
 
 struct RootScene: View {
     @State private var model: RootSceneViewModel
-    
+   
     init(model: RootSceneViewModel) {
         _model = State(initialValue: model)
     }

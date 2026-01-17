@@ -33,7 +33,16 @@ extension Colors {
 }
 
 // MARK: - Faded Variants
-
+extension LinearGradient {
+    static let blueFaded = LinearGradient(
+        colors: [
+            Color.dynamicColor("#6BA3F1", dark: "#5A96ED"),
+            Color.dynamicColor("#6085E9", dark: "#5A7CE6")
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+}
 extension Colors {
     public static let blueFaded = Color.dynamicColor("#6BA3F1", dark: "#5A96ED")
     public static let blueDarkFaded = Color.dynamicColor("#6085E9", dark: "#5A7CE6")

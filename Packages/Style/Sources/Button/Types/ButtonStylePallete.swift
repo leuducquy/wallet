@@ -31,8 +31,8 @@ extension ButtonStylePalette {
         foreground: Colors.whiteSolid,
         foregroundPressed: Colors.whiteSolid,
         background: Colors.blue,
-        backgroundPressed: Colors.blueDark,
-        backgroundDisabled: Colors.blueDarkFaded
+        backgroundPressed: Colors.grayFaded,
+        backgroundDisabled: Colors.grayFaded
     )
 
     static let blue = ButtonStylePalette(
@@ -122,7 +122,18 @@ extension ButtonStylePalette {
         backgroundPressed: Colors.Empty.listEmpty,
         backgroundDisabled: Colors.Empty.listEmpty
     )
+//    static let primary = ButtonStylePalette(
+//        foreground: Colors.white,
+//        foregroundPressed: Colors.white.opacity(0.9),
+//        background: Colors.clear,
+//        backgroundPressed: Colors.clear,
+//        backgroundDisabled: Colors.grayVeryLightFaded
+//    )
 }
+public extension Colors {
+    static let clear = Color.clear
+}
+
 // MARK: – Preview
 private struct PaletteSwatch: View {
     let palette: ButtonStylePalette

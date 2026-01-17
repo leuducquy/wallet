@@ -12,26 +12,35 @@ public struct OnboardingScene: View {
     }
 
     public var body: some View {
-        VStack {
-            Spacer()
-            VStack(alignment: .center, spacing: 24) {
-                StateButton(
-                    text: model.createWalletTitle,
-                    action: model.onCreateWallet
-                )
-                StateButton(
-                    text: model.importWalletTitle,
-                    action: model.onImportWallet
-                )
+        ZStack {
+            // Background
+            Image("splashscreen")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            VStack {
+                Spacer()
+                VStack(alignment: .center, spacing: 24) {
+                    StateButton(
+                        text: model.createWalletTitle,
+                        action: model.onCreateWallet,
+                        
+                    )
+                    StateButton(
+                        text: model.importWalletTitle,
+                        action: model.onImportWallet,
+                        
+                    )
+                }
+                .frame(maxWidth: .scene.button.maxWidth)
+                .padding(.scene.bottom * 6)
             }
-            .frame(maxWidth: .scene.button.maxWidth)
-            .padding(.scene.bottom * 2)
+            .overlay(
+                LogoView()
+            )
+            .frame(maxWidth: .infinity)
+            
+            .navigationTitle(model.title)
         }
-        .overlay(
-            LogoView()
-        )
-        .frame(maxWidth: .infinity)
-        .background(Colors.white)
-        .navigationTitle(model.title)
     }
 }
