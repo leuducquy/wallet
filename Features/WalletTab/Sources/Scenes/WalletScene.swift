@@ -99,7 +99,7 @@ public struct WalletScene: View {
 //                    .frame(maxWidth: .infinity)
 //                }
             }.padding(.bottom, 100)
-            
+                .ignoresSafeArea(.keyboard)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
             

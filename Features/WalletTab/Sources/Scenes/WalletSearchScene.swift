@@ -55,14 +55,17 @@ public struct WalletSearchScene: View {
         .onChange(of: model.isSearchPresented, model.onChangeSearchPresented)
         .onAppear {
             model.onAppear()
+            
         }
         .toast(message: $model.isPresentingToastMessage)
-        .ignoresSafeArea(.keyboard)
     }
  
     @ViewBuilder
     private var assetsList: some View {
-        
+        ZStack {
+            
+            BackGroundView()
+               
       
         List {
             if model.showTags {
@@ -111,12 +114,12 @@ public struct WalletSearchScene: View {
             }
         }
                
-                .scrollDismissesKeyboard(.interactively).listRowBackground(Color.clear).listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .background() {
-                    BackGroundView()
-                }
-        .contentMargins(.top, .zero, for: .scrollContent)
+        .listRowBackground(Color.clear)
+        .listStyle(.plain)
+        .scrollDismissesKeyboard(.interactively)
+        .contentMargins([.top], .extraSmall, for: .scrollContent)
+        .listSectionSpacing(.compact)
+        }
     }
     
 

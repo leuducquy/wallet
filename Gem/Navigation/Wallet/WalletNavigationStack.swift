@@ -46,11 +46,6 @@ struct WalletNavigationStack: View {
         NavigationStack(path: navigationPath) {
            
             ZStack {
-             
-                if !model.isPresentingSearch {
-                        WalletScene(model: model)
-                    }
-
                 if model.isPresentingSearch {
                     WalletSearchScene(
                         model: WalletSearchSceneViewModel(
@@ -64,6 +59,8 @@ struct WalletNavigationStack: View {
                         )
                     )
                     .transition(.opacity)
+                } else {
+                    WalletScene(model: model)
                 }
             }
             .onChange(of: model.currentWallet, model.onChangeWallet)
