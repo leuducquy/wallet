@@ -17,12 +17,17 @@ public struct WalletSearchScene: View {
     }
 
     public var body: some View {
-        
-        SearchableWrapper(
-            content: { assetsList },
-            isSearching: $model.isSearching,
-            dismissSearch: $model.dismissSearch
-        )
+        ZStack {
+            BackGroundView()
+                .ignoresSafeArea()
+
+            VStack(spacing: .zero) {
+                searchHeader
+
+                assetsList
+            }
+            .keyboardAwarePadding()
+        }
         .overlay {
             if model.showLoading {
                 LoadingView()
@@ -39,11 +44,6 @@ public struct WalletSearchScene: View {
         }
         .observeQuery(request: $model.request, value: $model.assets)
         .observeQuery(request: $model.recentActivityRequest, value: $model.recentActivities)
-        .searchable(
-            text: $model.searchModel.searchableQuery,
-            isPresented: $model.isSearchPresented,
-            placement: .navigationBarDrawer(displayMode: .always)
-        )
         .autocorrectionDisabled(true)
         .debounce(
             value: $model.searchModel.searchableQuery.wrappedValue,
@@ -52,21 +52,14 @@ public struct WalletSearchScene: View {
         )
         .onChange(of: model.searchModel.searchableQuery, model.onChangeSearchQuery)
         .onChange(of: model.isSearching, model.onChangeFocus)
-        .onChange(of: model.isSearchPresented, model.onChangeSearchPresented)
         .onAppear {
             model.onAppear()
-            
         }
         .toast(message: $model.isPresentingToastMessage)
     }
  
     @ViewBuilder
     private var assetsList: some View {
-        ZStack {
-            
-            BackGroundView()
-               
-      
         List {
             if model.showTags {
                 Section {
@@ -74,7 +67,8 @@ public struct WalletSearchScene: View {
                         tags: model.searchModel.tagsViewModel.items,
                         onSelect: { model.onSelectTag(tag: $0.tag) }
                     )
-                } .listRowBackground(Color.clear)
+                }
+                .listRowBackground(Color.clear)
                 .cleanListRow(topOffset: .zero)
                 .lineSpacing(.zero)
                 .listSectionSpacing(.zero)
@@ -109,19 +103,38 @@ public struct WalletSearchScene: View {
                     header: {
                         Text(model.assetsTitle)
                     }
-                ) .listRowBackground(Color.clear)
+                )
+                .listRowBackground(Color.clear)
                 .listRowInsets(.assetListRowInsets)
             }
         }
-               
         .listRowBackground(Color.clear)
         .listStyle(.plain)
         .scrollDismissesKeyboard(.interactively)
         .contentMargins([.top], .extraSmall, for: .scrollContent)
         .listSectionSpacing(.compact)
-        }
     }
-    
+
+    @ViewBuilder
+    private var searchHeader: some View {
+        HStack(spacing: .small) {
+            Images.System.search
+                .foregroundColor(Colors.secondaryText)
+
+            TextField(
+                "Search",
+                text: $model.searchModel.searchableQuery
+            )
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled(true)
+            .submitLabel(.search)
+        }
+        .padding(.medium)
+        .background(Colors.listStyleColor)
+        .cornerRadius(.medium)
+        .padding(.horizontal, .medium)
+        .padding(.top, .medium)
+    }
 
     @ViewBuilder
     private func list(for items: [AssetData]) -> some View {

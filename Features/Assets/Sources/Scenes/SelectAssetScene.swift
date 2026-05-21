@@ -16,11 +16,16 @@ public struct SelectAssetScene: View {
     }
 
     public var body: some View {
-        SearchableWrapper(
-            content: { list },
-            isSearching: $model.isSearching,
-            dismissSearch: $model.isDismissSearch
-        )
+        ZStack {
+            BackGroundView()
+                .ignoresSafeArea()
+
+            SearchableWrapper(
+                content: { list },
+                isSearching: $model.isSearching,
+                dismissSearch: $model.isDismissSearch
+            )
+        }
         .listSectionSpacing(.compact)
         .searchable(
             text: $model.searchModel.searchableQuery,

@@ -47,18 +47,18 @@ struct WalletNavigationStack: View {
            
             ZStack {
                 if model.isPresentingSearch {
-                    WalletSearchScene(
-                        model: WalletSearchSceneViewModel(
-                            wallet: model.wallet,
-                            searchService: AssetSearchService(assetsService: assetsService),
-                            activityService: activityService,
-                            walletsService: walletsService,
-                            onDismissSearch: model.onToggleSearch,
-                            onSelectAssetAction: { navigationState.wallet.append(Scenes.Asset(asset: $0)) },
-                            onAddToken: model.onSelectAddCustomToken
-                        )
-                    )
-                    .transition(.opacity)
+//                    WalletSearchScene(
+//                        model: WalletSearchSceneViewModel(
+//                            wallet: model.wallet,
+//                            searchService: AssetSearchService(assetsService: assetsService),
+//                            activityService: activityService,
+//                            walletsService: walletsService,
+//                            onDismissSearch: model.onToggleSearch,
+//                            onSelectAssetAction: { navigationState.wallet.append(Scenes.Asset(asset: $0)) },
+//                            onAddToken: model.onSelectAddCustomToken
+//                        )
+//                    )
+//                    .transition(.opacity)
                 } else {
                     WalletScene(model: model)
                 }
@@ -87,11 +87,11 @@ struct WalletNavigationStack: View {
 //                        )
 //                        .liquidGlass()
 //                    }
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: model.onToggleSearch) {
-                            model.searchImage
-                        }
-                    }
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: model.onToggleSearch) {
+//                            model.searchImage
+//                        }
+//                    }
                 }
             }
             .navigationDestination(for: Scenes.Asset.self) {
