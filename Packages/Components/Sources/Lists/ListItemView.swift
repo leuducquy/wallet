@@ -12,16 +12,16 @@ public struct ListItemView: View {
 
     public init(
         title: String? = nil,
-        titleStyle: TextStyle = ListItemModel.StyleDefaults.titleStyle,
+        titleStyle: TextStyle =  .whiteText,
         titleTag: String? = nil,
-        titleTagStyle: TextStyle = ListItemModel.StyleDefaults.titleTagStyle,
+        titleTagStyle: TextStyle = .whiteText,
         titleTagType: TitleTagType = .none,
         titleExtra: String? = nil,
-        titleStyleExtra: TextStyle = ListItemModel.StyleDefaults.titleExtraStyle,
+        titleStyleExtra: TextStyle = .whiteText,
         subtitle: String? = nil,
-        subtitleStyle: TextStyle = ListItemModel.StyleDefaults.subtitleStyle,
+        subtitleStyle: TextStyle = .whiteText,
         subtitleExtra: String? = nil,
-        subtitleStyleExtra: TextStyle = ListItemModel.StyleDefaults.subtitleExtraStyle,
+        subtitleStyleExtra: TextStyle = .whiteText,
         imageStyle: ListItemImageStyle? = nil,
         placeholders: [ListItemViewPlaceholderType] = [],
         infoAction: (() -> Void)? = nil
@@ -57,16 +57,16 @@ public struct ListItemView: View {
     ) {
         self.init(model: ListItemModel(
             title: title?.text,
-            titleStyle: title?.style ?? ListItemModel.StyleDefaults.titleStyle,
+            titleStyle: title?.style ??  .whiteText,
             titleTag: titleTag?.text,
-            titleTagStyle: titleTag?.style ?? ListItemModel.StyleDefaults.titleTagStyle,
+            titleTagStyle: titleTag?.style ??  .whiteText,
             titleTagType: titleTagType,
             titleExtra: titleExtra?.text,
-            titleStyleExtra: titleExtra?.style ?? ListItemModel.StyleDefaults.titleExtraStyle,
+            titleStyleExtra: titleExtra?.style ??  .whiteText,
             subtitle: subtitle?.text,
-            subtitleStyle: subtitle?.style ?? ListItemModel.StyleDefaults.subtitleStyle,
+            subtitleStyle: subtitle?.style ??  .whiteText,
             subtitleExtra: subtitleExtra?.text,
-            subtitleStyleExtra: subtitleExtra?.style ?? ListItemModel.StyleDefaults.subtitleExtraStyle,
+            subtitleStyleExtra: subtitleExtra?.style ??  .whiteText,
             imageStyle: imageStyle,
             placeholders: placeholders,
             infoAction: infoAction
@@ -117,7 +117,7 @@ extension ListItemView {
             VStack(alignment: .leading, spacing: .tiny) {
                 HStack(spacing: .tiny) {
                     Text(configuration.title.text)
-                        .textStyle(configuration.title.style)
+                        .textStyle( .whiteText)
                         .lineLimit(configuration.title.lineLimit)
                         .truncationMode(.tail)
 
@@ -132,7 +132,7 @@ extension ListItemView {
 
                 if let extra = configuration.titleExtra {
                     Text(extra.text)
-                        .textStyle(extra.style)
+                        .textStyle(.whiteText)
                         .lineLimit(extra.lineLimit)
                 }
             }
@@ -151,7 +151,7 @@ extension ListItemView {
         var body: some View {
             HStack(spacing: .tiny) {
                 Text(titleTag.text)
-                    .textStyle(titleTag.style)
+                    .textStyle( .whiteText)
                     .lineLimit(titleTag.lineLimit)
                     .minimumScaleFactor(0.8)
 
@@ -183,14 +183,14 @@ extension ListItemView {
         var body: some View {
             VStack(alignment: .trailing, spacing: .tiny) {
                 Text(subtitle.text)
-                    .textStyle(subtitle.style)
+                    .textStyle( .whiteText)
                     .multilineTextAlignment(.trailing)
                     .lineLimit(subtitle.lineLimit)
                     .truncationMode(.middle)
 
                 if let extra = subtitleExtra {
                     Text(extra.text)
-                        .textStyle(extra.style)
+                        .textStyle( .whiteText,)
                         .multilineTextAlignment(.trailing)
                         .lineLimit(extra.lineLimit)
                         .truncationMode(.middle)

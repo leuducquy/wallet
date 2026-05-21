@@ -37,9 +37,9 @@ extension ListAssetItemView {
         HStack(spacing: .tiny) {
             Text(model.name)
                 .textStyle(
-                    TextStyle(font: .body, color: .primary, fontWeight: .semibold)
+                    TextStyle(font: .body, color: .white, fontWeight: .semibold)
                 )
-                .lineLimit(1)
+                .lineLimit(1).foregroundColor(.white)
             if let symbol = model.symbol {
                 Text(symbol)
                     .textStyle(.calloutSecondary)
@@ -54,7 +54,9 @@ extension ListAssetItemView {
             if !price.text.isEmpty {
                 HStack(spacing: .extraSmall) {
                     Text(price.text)
-                        .textStyle(price.style)
+                        .textStyle(
+                            TextStyle(font: .body, color: .white, fontWeight: .semibold)
+                        )
                     Text(priceChangePercentage24h.text)
                         .textStyle(priceChangePercentage24h.style)
                 }
@@ -62,8 +64,9 @@ extension ListAssetItemView {
             }
         case .type(let textValue):
             Text(textValue.text)
-                .textStyle(textValue.style)
-                .numericTransition(for: textValue.text)
+                .textStyle(
+                    TextStyle(font: .body, color: .white, fontWeight: .semibold)
+                )
         case .none:
             EmptyView()
         }
@@ -97,11 +100,15 @@ extension ListAssetItemView {
     private func balanceView(balance: TextValue, totalFiat: TextValue) -> some View {
         VStack(alignment: .trailing, spacing: .tiny) {
             PrivacyText(balance.text, isEnabled: model.showBalancePrivacy)
-                .textStyle(balance.style)
+                .textStyle(
+                    TextStyle(font: .body, color: .white, fontWeight: .semibold)
+                )
                 .numericTransition(for: balance.text)
             if !totalFiat.text.isEmpty {
                 PrivacyText(totalFiat.text, isEnabled: model.showBalancePrivacy)
-                    .textStyle(totalFiat.style)
+                    .textStyle(
+                        TextStyle(font: .body, color: .white, fontWeight: .semibold)
+                    )
                     .numericTransition(for: totalFiat.text)
             }
         }

@@ -21,8 +21,26 @@ struct GemApp: App {
     
     init() {
         UNUserNotificationCenter.current().delegate = appDelegate
+        setupNavigationBarAppearance()
     }
-    
+    func setupNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        
+        appearance.backgroundColor = .clear
+
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+    }
     var body: some Scene {
         WindowGroup {
             RootScene(

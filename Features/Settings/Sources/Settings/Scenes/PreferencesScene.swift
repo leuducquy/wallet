@@ -16,6 +16,9 @@ public struct PreferencesScene: View {
     }
 
     public var body: some View {
+        ZStack {
+            BackGroundView()
+       
         List {
             Group {
                 Section {
@@ -36,13 +39,13 @@ public struct PreferencesScene: View {
                         action: onSelectLanguage
                     )
 
-                    NavigationLink(value: Scenes.Chains()) {
-                        ListItemView(
-                            title: model.networksTitle,
-                            imageStyle: .settings(assetImage: model.networksImage)
-                        )
-                    }
-                }
+//                    NavigationLink(value: Scenes.Chains()) {
+//                        ListItemView(
+//                            title: model.networksTitle,
+//                            imageStyle: .settings(assetImage: model.networksImage)
+//                        )
+//                    }
+                }.listRowBackground(Color.clear)
                 Section {
                     ListItemToggleView(
                         isOn: $model.isPerpetualEnabled,
@@ -60,10 +63,13 @@ public struct PreferencesScene: View {
                         )
                         .padding(.leading, Sizing.image.asset - .tiny)
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
             .listRowInsets(.assetListRowInsets)
-        }
+        }.padding(.top,100)
+        .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.clear)
         .contentMargins(.top, .scene.top, for: .scrollContent)
         .listSectionSpacing(.compact)
         .navigationTitle(model.title)
@@ -73,6 +79,7 @@ public struct PreferencesScene: View {
                 leverageOptions: model.leverageOptions,
                 selectedLeverage: $model.perpetualLeverage
             )
+        }
         }
     }
 }

@@ -32,7 +32,7 @@ public struct ListItemToggleView: View {
                     )
                 }
                 Text(title.text)
-                    .textStyle(title.style)
+                    .textStyle(.whiteText)
                     .lineLimit(1)
                     .truncationMode(.middle)
             }

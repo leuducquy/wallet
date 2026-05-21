@@ -323,7 +323,7 @@ public enum Images {
         ])
     ]
 
-    return List {
+    List {
         ForEach(imageCategories, id: \.0) { category in
             Section(header: Text(category.0)) {
                 ForEach(category.1.indices, id: \.self) { index in

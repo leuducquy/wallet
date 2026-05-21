@@ -8,7 +8,7 @@ import Primitives
 
 public struct WalletHeaderView: View {
     private let model: any HeaderViewModel
-
+    private var showTwoButton : Bool = false
     @Binding var isHideBalanceEnalbed: Bool
 
     private let onHeaderAction: HeaderButtonAction?
@@ -18,16 +18,18 @@ public struct WalletHeaderView: View {
         model: any HeaderViewModel,
         isHideBalanceEnalbed: Binding<Bool>,
         onHeaderAction: HeaderButtonAction?,
-        onInfoAction: VoidAction
+        onInfoAction: VoidAction,
+        showTwoButton: Bool = false
     ) {
         self.model = model
         _isHideBalanceEnalbed = isHideBalanceEnalbed
         self.onHeaderAction = onHeaderAction
         self.onInfoAction = onInfoAction
+        self.showTwoButton = showTwoButton
     }
 
     public var body: some View {
-        VStack(spacing: .zero) {
+        VStack() {
             if let assetImage = model.assetImage {
                 AssetImageView(
                     assetImage: assetImage,
@@ -42,14 +44,14 @@ public struct WalletHeaderView: View {
                         isEnabled: $isHideBalanceEnalbed
                     )
                 } else {
-                    Text(model.title)
+                    Text(model.title).textStyle(.whiteText)
                 }
             }
             .numericTransition(for: model.title)
             .minimumScaleFactor(0.5)
             .font(.system(size: 42))
             .fontWeight(.semibold)
-            .foregroundStyle(Colors.black)
+            .foregroundStyle(Colors.white)
             .lineLimit(1)
             .padding(.bottom, .space10)
 
@@ -60,7 +62,7 @@ public struct WalletHeaderView: View {
                 )
                 .font(.system(size: 16))
                 .fontWeight(.medium)
-                .foregroundStyle(Colors.gray)
+                .foregroundStyle(Colors.white)
                 .numericTransition(for: model.subtitle)
                 .padding(.bottom, .space10)
             }
@@ -75,10 +77,10 @@ public struct WalletHeaderView: View {
 
                         Text(Localized.Wallet.Watch.Tooltip.title)
                             .foregroundColor(Colors.black)
-                            .font(.callout)
+                            .font(.callout).tint(Colors.white)
 
                         Images.System.info
-                            .tint(Colors.black)
+                            .tint(Colors.white)
                     }
                     .padding()
                     .background(Colors.grayDarkBackground)
@@ -87,7 +89,7 @@ public struct WalletHeaderView: View {
                 }
 
             case false:
-                HeaderButtonsView(buttons: model.buttons, action: onHeaderAction)
+                HeaderButtonsView(buttons:showTwoButton ? [model.buttons[0],model.buttons[1]] : model.buttons, action: onHeaderAction)
                     .padding(.top, .space8)
             }
         }
@@ -112,6 +114,6 @@ public struct WalletHeaderView: View {
         model: model,
         isHideBalanceEnalbed: .constant(false),
         onHeaderAction: .none,
-        onInfoAction: .none
+        onInfoAction: .none, showTwoButton: false
     )
 }

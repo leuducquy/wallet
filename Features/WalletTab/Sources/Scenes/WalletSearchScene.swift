@@ -17,6 +17,7 @@ public struct WalletSearchScene: View {
     }
 
     public var body: some View {
+        
         SearchableWrapper(
             content: { assetsList },
             isSearching: $model.isSearching,
@@ -56,10 +57,13 @@ public struct WalletSearchScene: View {
             model.onAppear()
         }
         .toast(message: $model.isPresentingToastMessage)
+        .ignoresSafeArea(.keyboard)
     }
-
+ 
     @ViewBuilder
     private var assetsList: some View {
+        
+      
         List {
             if model.showTags {
                 Section {
@@ -67,19 +71,19 @@ public struct WalletSearchScene: View {
                         tags: model.searchModel.tagsViewModel.items,
                         onSelect: { model.onSelectTag(tag: $0.tag) }
                     )
-                }
+                } .listRowBackground(Color.clear)
                 .cleanListRow(topOffset: .zero)
                 .lineSpacing(.zero)
                 .listSectionSpacing(.zero)
             }
 
             if model.showRecent {
-                RecentActivitySectionView(models: model.activityModels, ) { assetModel in
-                    NavigationLink(value: Scenes.Asset(asset: assetModel.asset)) {
-                        AssetChipView(model: assetModel)
-                    }
-                }
-                .listSectionSpacing(.zero)
+//                RecentActivitySectionView(models: model.activityModels, ) { assetModel in
+//                    NavigationLink(value: Scenes.Asset(asset: assetModel.asset)) {
+//                        AssetChipView(model: assetModel)
+//                    }
+//                }
+//                .listSectionSpacing(.zero)
             }
 
             if model.showPinnedSection {
@@ -93,6 +97,7 @@ public struct WalletSearchScene: View {
                     }
                 )
                 .listRowInsets(.assetListRowInsets)
+                .listRowBackground(Color.clear)
             }
 
             if model.showAssetsSection {
@@ -101,12 +106,19 @@ public struct WalletSearchScene: View {
                     header: {
                         Text(model.assetsTitle)
                     }
-                )
+                ) .listRowBackground(Color.clear)
                 .listRowInsets(.assetListRowInsets)
             }
         }
+               
+                .scrollDismissesKeyboard(.interactively).listRowBackground(Color.clear).listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background() {
+                    BackGroundView()
+                }
         .contentMargins(.top, .zero, for: .scrollContent)
     }
+    
 
     @ViewBuilder
     private func list(for items: [AssetData]) -> some View {

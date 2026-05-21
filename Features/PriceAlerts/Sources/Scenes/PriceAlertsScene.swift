@@ -22,6 +22,7 @@ public struct PriceAlertsScene: View {
     }
 
     public var body: some View {
+        
         List {
             toggleView
             

@@ -19,6 +19,9 @@ public struct WalletsScene: View {
     }
 
     public var body: some View {
+        ZStack {
+            BackGroundView()
+        
         List {
             Section {
                 Button(
@@ -27,7 +30,7 @@ public struct WalletsScene: View {
                         HStack {
                             Images.Wallets.create
                             Text(Localized.Wallet.createNewWallet)
-                        }
+                        }.foregroundColor(.white)
                     }
                 )
                 Button(
@@ -36,10 +39,10 @@ public struct WalletsScene: View {
                         HStack {
                             Images.Wallets.import
                             Text(Localized.Wallet.importExistingWallet)
-                        }
+                        }.foregroundColor(.white)
                     }
                 )
-            }
+            }.listRowBackground(Color.clear)
 
             if !model.pinnedWallets.isEmpty {
                 Section {
@@ -59,7 +62,7 @@ public struct WalletsScene: View {
                         Images.System.pin
                         Text(Localized.Common.pinned)
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
 
             Section {
@@ -74,7 +77,9 @@ public struct WalletsScene: View {
                     )
                 }
                 .onMove(perform: model.onMove)
-            }
+            }.listRowBackground(Color.clear)
+        }.safeAreaInset(edge: .top) {
+            Color.clear.frame(height: 100)
         }
         .contentMargins(.top, .scene.top, for: .scrollContent)
         .alertSheet($model.isPresentingAlertMessage)
@@ -99,6 +104,10 @@ public struct WalletsScene: View {
             request: .constant(model.walletsRequest),
             value: $model.wallets
         )
+    }
+            .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
     }
 }
 

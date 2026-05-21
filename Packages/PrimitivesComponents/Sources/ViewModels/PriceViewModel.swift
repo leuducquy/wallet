@@ -62,11 +62,11 @@ public struct PriceViewModel: Sendable {
 
     public var priceChangeTextBackgroundColor: Color {
         if priceChange == 0 {
-            return Colors.grayVeryLight
+            return Colors.red
         } else if priceChange ?? 0 > 0 {
-            return Colors.greenLight
+            return Colors.green
         }
-        return Colors.redLight
+        return Colors.red
     }
 
     public func fiatAmountText(amount: Double) -> String {

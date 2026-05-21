@@ -36,21 +36,21 @@ public struct TransactionsList: View {
         if showSections {
             ForEach(headers, id: \.self) { header in
                 Section(
-                    header: Text(TransactionDateFormatter(date: header).section)
+                    header: Text(TransactionDateFormatter(date: header).section, ).textStyle(.whiteText)
                 ) {
                     TransactionsListView(
                         explorerService: explorerService,
                         transactions: groupedByDate[header]!,
                         currency: currency
-                    )
-                }
+                    ).listRowBackground(Color.clear)
+                }.listRowBackground(Color.clear)
             }
         } else {
             TransactionsListView(
                 explorerService: explorerService,
                 transactions: transactions,
                 currency: currency
-            )
+            ).listRowBackground(Color.clear)
         }
     }
 }
@@ -71,7 +71,7 @@ private struct TransactionsListView: View {
 
     var body: some View {
         ForEach(transactions) { transaction in
-            NavigationLink(value: transaction) {
+          //  NavigationLink(value: transaction) {
                 TransactionView(
                     model: .init(
                         explorerService: explorerService,
@@ -79,7 +79,7 @@ private struct TransactionsListView: View {
                         currency: currency
                     )
                 )
-            }
+          //  }
         }
     }
 }

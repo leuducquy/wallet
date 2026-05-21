@@ -18,11 +18,11 @@ public enum ListItemViewPlaceholderType: Identifiable, CaseIterable {
 
 public struct ListItemModel {
     public struct StyleDefaults {
-        public static let titleStyle: TextStyle = .body
+        public static let titleStyle: TextStyle = .whiteText
         public static let titleTagStyle: TextStyle = .body
         public static let titleExtraStyle: TextStyle = .footnote
-        public static let subtitleStyle: TextStyle = .calloutSecondary
-        public static let subtitleExtraStyle: TextStyle = .calloutSecondary
+        public static let subtitleStyle: TextStyle = .whiteText
+        public static let subtitleExtraStyle: TextStyle = .whiteText
     }
     
     public struct TitleConfiguration {

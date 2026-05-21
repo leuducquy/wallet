@@ -23,7 +23,7 @@ public struct PriceListItemViewModel {
     var priceAmount: TextValue {
         TextValue(
             text: model.priceAmountText,
-            style: .calloutSecondary
+            style: .whiteText
         )
     }
     
@@ -33,7 +33,9 @@ public struct PriceListItemViewModel {
             style: TextStyle(
                 font: .callout,
                 color: model.priceChangeTextColor,
-                background: model.priceChangeTextBackgroundColor
+                fontWeight:.bold,
+                background: model.priceChangeTextBackgroundColor,
+              
             )
         )
     }

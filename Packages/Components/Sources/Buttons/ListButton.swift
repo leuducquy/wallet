@@ -32,7 +32,7 @@ public struct ListButton: View {
                 if let title = title {
                     Text(title)
                         .fontWeight(.medium)
-                        .multilineTextAlignment(.center)
+                        .multilineTextAlignment(.center).foregroundColor(.white)
                 }
             }
             .padding(.all, padding)

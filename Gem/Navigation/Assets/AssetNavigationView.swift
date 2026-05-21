@@ -26,17 +26,17 @@ struct AssetNavigationView: View {
         .observeQuery(request: $model.input.bannersRequest, value: $model.banners)
         .observeQuery(request: $model.input.transactionsRequest, value: $model.transactions)
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button(action: model.onTogglePriceAlert) {
-                    model.priceAlertsImage
-                }
-
-                AdaptiveActionMenu(
-                    title: model.title,
-                    items: model.menuItems,
-                    label: { model.optionsImage }
-                )
-            }
+//            ToolbarItemGroup(placement: .topBarTrailing) {
+//                Button(action: model.onTogglePriceAlert) {
+//                    model.priceAlertsImage
+//                }
+//
+//                AdaptiveActionMenu(
+//                    title: model.title,
+//                    items: model.menuItems,
+//                    label: { model.optionsImage }
+//                )
+//            }
         }
         .toast(message: $model.isPresentingToastMessage)
         .sheet(item: $model.isPresentingAssetSheet) {

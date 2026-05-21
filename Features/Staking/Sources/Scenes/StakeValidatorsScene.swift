@@ -16,9 +16,16 @@ public struct StakeValidatorsScene: View {
     }
 
     public var body: some View {
+        ZStack {
+            BackGroundView()
+        
         List {
             ForEach(model.list) { section in
-                Section(section.section) {
+                Section( header: Text(section.section)
+                    .font(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .textCase(nil)) {
                     ForEach(section.values) { value in
                         ValidatorSelectionView(value: value, selection: model.currentValidator?.id) {
                             model.selectValidator?($0)
@@ -26,10 +33,17 @@ public struct StakeValidatorsScene: View {
                         }
                         .contextMenu(model.contextMenu(for: value.value))
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
         }
         .navigationTitle(model.title)
         .safariSheet(url: $model.isPresentingUrl)
+        }.safeAreaInset(edge: .top) {
+            Color.clear
+                .frame(height: 100)
+        }
+            .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
     }
 }

@@ -43,6 +43,7 @@ public struct AssetImageView: View {
         .frame(width: size, height: size)
         .cornerRadius(cornerRadius)
         .overlay(overlayBadge)
+        .foregroundColor(.white)
     }
 
     @ViewBuilder

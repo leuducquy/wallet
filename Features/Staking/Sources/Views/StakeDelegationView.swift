@@ -16,14 +16,16 @@ public struct StakeDelegationView: View {
     public var body: some View {
         ListItemView(
            title: delegation.validatorText,
-           titleStyle: delegation.titleStyle,
+           titleStyle: .whiteText,
            titleExtra: delegation.stateText,
            titleStyleExtra: delegation.stateStyle,
            subtitle: delegation.balanceText,
-           subtitleStyle: delegation.subtitleStyle,
+           subtitleStyle: .whiteText,
            subtitleExtra: delegation.fiatValueText,
-           subtitleStyleExtra: delegation.subtitleExtraStyle,
+           subtitleStyleExtra: .whiteText,
            imageStyle: .asset(assetImage: delegation.validatorImage)
+           
+           
         )
     }
 }

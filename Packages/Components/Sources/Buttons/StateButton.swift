@@ -47,7 +47,7 @@ public struct StateButton: View {
         VStack(spacing: .tiny) {
             if let infoTextValue {
                 Text(infoTextValue.text)
-                    .textStyle(infoTextValue.style)
+                    .textStyle(.whiteText)
                     .multilineTextAlignment(.center)
             }
             Button(action: action) {

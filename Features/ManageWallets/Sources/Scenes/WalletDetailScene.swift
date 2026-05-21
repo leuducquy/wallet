@@ -30,10 +30,13 @@ public struct WalletDetailScene: View {
     
     public var body: some View {
         VStack {
+            ZStack {
+                BackGroundView()
+           
             List {
                 Section {
                     FloatTextField(Localized.Wallet.name, text: $model.nameInput, allowClean: focusedField == .name)
-                        .focused($focusedField, equals: .name)
+                        .focused($focusedField, equals: .name).listRowBackground(Color.clear) .foregroundStyle(.white)
                 } header: {
                     HStack {
                         Spacer()
@@ -43,7 +46,7 @@ public struct WalletDetailScene: View {
                                     avatarImage: model.avatarAssetImage(for: dbWallet),
                                     size: .image.extraLarge,
                                     action: model.onSelectImage
-                                )
+                                ).listRowBackground(Color.clear)
                                 .padding(.bottom, .extraLarge)
                             }
                         }
@@ -54,12 +57,16 @@ public struct WalletDetailScene: View {
                 case .multicoin, .single:
                     Section {
                         NavigationCustomLink(
-                            with: ListItemView(title: Localized.Common.show(Localized.Common.secretPhrase)),
+                            with: ListItemView(
+                                title: Localized.Common.show(Localized.Common.secretPhrase
+                                                                           )).listRowBackground(Color.clear),
                             action: model.onShowSecretPhrase
                         )
                     } header: {
-                        Text(Localized.Common.secretPhrase)
-                    }
+                        Text(Localized.Common.secretPhrase).font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.white)
+                    }.listRowBackground(Color.clear)
                 case .privateKey:
                     Section {
                         NavigationCustomLink(
@@ -82,11 +89,11 @@ public struct WalletDetailScene: View {
                                 mode: .auto(addressStyle: .short),
                                 addressLink: model.addressLink(account: account)
                             )
-                        )
+                        ).listRowBackground(Color.clear)
                     case .none:
                         EmptyView()
                     }
-                }
+                }.listRowBackground(Color.clear)
                 Section {
                     HStack {
                         Spacer()
@@ -96,8 +103,11 @@ public struct WalletDetailScene: View {
                         }
                         Spacer()
                     }
-                }
-            }
+                }.listRowBackground(Color.clear)
+            }.padding(.top,100)
+                    .listStyle(.plain)
+                            .scrollContentBackground(.hidden)
+                            .background(Color.clear)
         }
         .padding(.bottom, .scene.bottom)
         .background(Colors.grayBackground)
@@ -125,6 +135,7 @@ public struct WalletDetailScene: View {
         .alertSheet($model.isPresentingAlertMessage)
         .sheet(item: $model.isPresentingExportWallet) {
             ExportWalletNavigationStack(flow: $0)
+        }
         }
     }
 }

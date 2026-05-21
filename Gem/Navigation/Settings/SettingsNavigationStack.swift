@@ -61,115 +61,117 @@ struct SettingsNavigationStack: View {
     }
 
     var body: some View {
-        NavigationStack(path: navigationPath) {
-            SettingsScene(
-                model: SettingsViewModel(
-                    walletId: walletId,
-                    walletsService: walletsService,
-                    observablePrefereces: observablePreferences
-                ),
-                isPresentingWallets: $isPresentingWallets,
-                isPresentingSupport: $isPresentingSupport
-            )
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Scenes.Security.self) { _ in
-                SecurityScene(model: SecurityViewModel())
-            }
-            .navigationDestination(for: Scenes.Notifications.self) { _ in
-                NotificationsScene(
-                    model: NotificationsViewModel(
-                        deviceService: deviceService,
-                        bannerService: bannerService
-                    )
-                )
-            }
-            .navigationDestination(for: Scenes.PriceAlerts.self) { _ in
-                PriceAlertsNavigationView(
-                    model: PriceAlertsSceneViewModel(priceAlertService: priceAlertService)
-                )
-            }
-            .navigationDestination(for: Scenes.AssetPriceAlert.self) {
-                AssetPriceAlertsScene(
-                    model: AssetPriceAlertsViewModel(
-                        priceAlertService: priceAlertService,
+    
+            NavigationStack(path: navigationPath) {
+                SettingsScene(
+                    model: SettingsViewModel(
                         walletId: walletId,
-                        asset: $0.asset
-                    )
+                        walletsService: walletsService,
+                        observablePrefereces: observablePreferences
+                    ),
+                    isPresentingWallets: $isPresentingWallets,
+                    isPresentingSupport: $isPresentingSupport
                 )
-            }
-            .navigationDestination(for: Scenes.Price.self) { scene in
-                ChartScene(
-                    model: ChartSceneViewModel(
-                        priceService: priceService,
-                        assetModel: AssetViewModel(asset: scene.asset),
-                        priceAlertService: priceAlertService,
-                        walletId: walletId,
-                        isPresentingSetPriceAlert: .constant(nil)
-                    )
-                )
-            }
-            .navigationDestination(for: Scenes.Chains.self) { _ in
-                ChainListSettingsScene()
-            }
-            .navigationDestination(for: Scenes.AboutUs.self) { _ in
-                AboutUsScene(
-                    model: AboutUsViewModel(
-                        preferences: observablePreferences,
-                        releaseService: releaseService
-                    )
-                )
-            }
-            .navigationDestination(for: Scenes.WalletConnect.self) { _ in
-                ConnectionsScene(
-                    model: ConnectionsViewModel(
-                        service: connectionsService,
-                        walletConnectorPresenter: walletConnectorManager.presenter
-                    )
-                )
-            }
-            .navigationDestination(for: Scenes.Developer.self) { _ in
-                DeveloperScene(model: DeveloperViewModel(
-                    walletId: walletId,
-                    transactionsService: transactionsService,
-                    assetService: assetsService,
-                    stakeService: stakeService,
-                    bannerService: bannerService,
-                    priceService: priceService,
-                    perpetualService: perpetualService
-                ))
-            }
-            .navigationDestination(for: Scenes.Currency.self) { _ in
-                CurrencyScene(model: currencyModel)
-            }
-            .navigationDestination(for: Scenes.Preferences.self) { _ in
-                PreferencesScene(model: PreferencesViewModel(currencyModel: currencyModel))
-            }
-            .navigationDestination(for: Scenes.Referral.self) { scene in
-                let wallets = walletService.wallets.filter { $0.type == .multicoin }
-                if let wallet = wallets.first(where: { $0.id == walletService.currentWallet?.id }) ?? wallets.first {
-                    RewardsScene(
-                        model: RewardsViewModel(
-                            rewardsService: rewardsService,
-                            wallet: wallet,
-                            wallets: wallets,
-                            activateCode: scene.code
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: Scenes.Security.self) { _ in
+                    SecurityScene(model: SecurityViewModel())
+                }
+                .navigationDestination(for: Scenes.Notifications.self) { _ in
+                    NotificationsScene(
+                        model: NotificationsViewModel(
+                            deviceService: deviceService,
+                            bannerService: bannerService
                         )
                     )
                 }
+                .navigationDestination(for: Scenes.PriceAlerts.self) { _ in
+                    PriceAlertsNavigationView(
+                        model: PriceAlertsSceneViewModel(priceAlertService: priceAlertService)
+                    )
+                }
+                .navigationDestination(for: Scenes.AssetPriceAlert.self) {
+                    AssetPriceAlertsScene(
+                        model: AssetPriceAlertsViewModel(
+                            priceAlertService: priceAlertService,
+                            walletId: walletId,
+                            asset: $0.asset
+                        )
+                    )
+                }
+                .navigationDestination(for: Scenes.Price.self) { scene in
+                    ChartScene(
+                        model: ChartSceneViewModel(
+                            priceService: priceService,
+                            assetModel: AssetViewModel(asset: scene.asset),
+                            priceAlertService: priceAlertService,
+                            walletId: walletId,
+                            isPresentingSetPriceAlert: .constant(nil)
+                        )
+                    )
+                }
+                .navigationDestination(for: Scenes.Chains.self) { _ in
+                    ChainListSettingsScene()
+                }
+                .navigationDestination(for: Scenes.AboutUs.self) { _ in
+                    AboutUsScene(
+                        model: AboutUsViewModel(
+                            preferences: observablePreferences,
+                            releaseService: releaseService
+                        )
+                    )
+                }
+                .navigationDestination(for: Scenes.WalletConnect.self) { _ in
+                    ConnectionsScene(
+                        model: ConnectionsViewModel(
+                            service: connectionsService,
+                            walletConnectorPresenter: walletConnectorManager.presenter
+                        )
+                    )
+                }
+                .navigationDestination(for: Scenes.Developer.self) { _ in
+                    DeveloperScene(model: DeveloperViewModel(
+                        walletId: walletId,
+                        transactionsService: transactionsService,
+                        assetService: assetsService,
+                        stakeService: stakeService,
+                        bannerService: bannerService,
+                        priceService: priceService,
+                        perpetualService: perpetualService
+                    ))
+                }
+                .navigationDestination(for: Scenes.Currency.self) { _ in
+                    CurrencyScene(model: currencyModel)
+                }
+                .navigationDestination(for: Scenes.Preferences.self) { _ in
+                    PreferencesScene(model: PreferencesViewModel(currencyModel: currencyModel))
+                }
+                .navigationDestination(for: Scenes.Referral.self) { scene in
+                    let wallets = walletService.wallets.filter { $0.type == .multicoin }
+                    if let wallet = wallets.first(where: { $0.id == walletService.currentWallet?.id }) ?? wallets.first {
+                        RewardsScene(
+                            model: RewardsViewModel(
+                                rewardsService: rewardsService,
+                                wallet: wallet,
+                                wallets: wallets,
+                                activateCode: scene.code
+                            )
+                        )
+                    }
+                }
+                .navigationDestination(for: Scenes.ChainSettings.self) {
+                    ChainSettingsScene(
+                        model: ChainSettingsSceneViewModel(nodeService: nodeService, chain: $0.chain)
+                    )
+                }
+                .sheet(isPresented: $isPresentingWallets) {
+                    WalletsNavigationStack(isPresentingWallets: $isPresentingWallets)
+                }
             }
-            .navigationDestination(for: Scenes.ChainSettings.self) {
-                ChainSettingsScene(
-                    model: ChainSettingsSceneViewModel(nodeService: nodeService, chain: $0.chain)
-                )
-            }
-            .sheet(isPresented: $isPresentingWallets) {
-                WalletsNavigationStack(isPresentingWallets: $isPresentingWallets)
+            .onChange(of: currencyModel.selectedCurrencyValue) { _, _ in
+                navigationState.settings.removeLast()
             }
         }
-        .onChange(of: currencyModel.selectedCurrencyValue) { _, _ in
-            navigationState.settings.removeLast()
-        }
-    }
+    
 }
 
 extension Preferences: @retroactive CurrencyStorable {}

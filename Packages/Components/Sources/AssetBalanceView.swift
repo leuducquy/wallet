@@ -28,10 +28,10 @@ public struct AssetBalanceView<SecondaryView: View>: View {
             }, primary: {
                 VStack(alignment: .leading, spacing: .tiny) {
                     Text(title)
-                        .textStyle(.headline.weight(.semibold))
-                    if let balance {                    
+                        .textStyle(.whiteText.weight(.semibold))
+                    if let balance {
                         Text(balance)
-                            .textStyle(TextStyle(font: .callout, color: Colors.gray, fontWeight: .medium))
+                            .textStyle(TextStyle(font: .callout, color: Colors.white, fontWeight: .medium))
                     }
                 }
                 .lineLimit(1)

@@ -6,7 +6,7 @@ import SwiftUI
 import Transfer
 import Staking
 import InfoSheet
-
+import Components
 struct StakeNavigationView: View {
     @Environment(\.viewModelFactory) private var viewModelFactory
     @Environment(\.stakeService) private var stakeService
@@ -25,6 +25,9 @@ struct StakeNavigationView: View {
     }
 
     var body: some View {
+        ZStack {
+            BackGroundView()
+       
         StakeScene(
             model: model
         )
@@ -40,9 +43,9 @@ struct StakeNavigationView: View {
             request: $model.validatorsRequest,
             value: $model.validators
         )
-        .ifLet(model.stakeInfoUrl, content: { view, url in
-            view.toolbarInfoButton(url: url)
-        })
+//        .ifLet(model.stakeInfoUrl, content: { view, url in
+//            view.toolbarInfoButton(url: url)
+//        })
         .sheet(item: $model.isPresentingInfoSheet) {
             InfoSheetScene(type: $0)
         }
@@ -71,5 +74,6 @@ struct StakeNavigationView: View {
                 )
             )
         }
+    }
     }
 }

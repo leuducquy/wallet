@@ -35,8 +35,7 @@ struct WalletListItemView: View {
     }
 
     var body: some View {
-        // https://www.jessesquires.com/blog/2023/07/18/navigation-link-accessory-view-swiftui
-        // Hack to hide chevron
+   
         ZStack {
             NavigationCustomLink(
                 with: EmptyView(),
@@ -62,7 +61,7 @@ struct WalletListItemView: View {
                     label: {
                         Images.System.settings
                             .padding(.vertical, 8)
-                            .padding(.leading, .small)
+                            .padding(.leading, .small).foregroundStyle(.white)
                     }
                 )
                 .buttonStyle(.borderless)

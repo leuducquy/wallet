@@ -18,6 +18,9 @@ struct ImportWalletTypeScene: View {
     }
 
     var body: some View {
+        ZStack {
+            BackGroundView()
+      
         List {
             Section {
                 NavigationLink(value: ImportWalletType.multicoin) {
@@ -26,7 +29,7 @@ struct ImportWalletTypeScene: View {
                         imageStyle: .asset(assetImage: AssetImage.image(Images.Logo.logo))
                     )
                 }
-            }
+            }.listRowBackground(Color.clear)
             
             if model.items(for: searchQuery).isEmpty {
                 StateEmptyView(title: Localized.Common.noResultsFound)
@@ -40,9 +43,14 @@ struct ImportWalletTypeScene: View {
                             )
                         }
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
+        }.safeAreaInset(edge: .top) {
+            Color.clear.frame(height: 100)
         }
+            .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
         .contentMargins(.top, .scene.top, for: .scrollContent)
         .navigationBarTitle(model.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -52,5 +60,6 @@ struct ImportWalletTypeScene: View {
         )
         .autocorrectionDisabled(true)
         .scrollDismissesKeyboard(.interactively)
+        }
     }
 }

@@ -14,6 +14,7 @@ public struct TransactionView: View {
     }
 
     public var body: some View {
+        
         ListItemView(
             title: model.titleTextValue,
             titleExtra: model.titleExtraTextValue,

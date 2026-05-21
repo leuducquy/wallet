@@ -14,6 +14,7 @@ public struct PriceListItemView: View {
  
     public var body: some View {
         HStack {
+            
             ListItemView(title: model.title)
             
             if model.showAmount {

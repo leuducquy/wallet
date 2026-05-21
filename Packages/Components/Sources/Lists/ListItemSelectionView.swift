@@ -64,8 +64,9 @@ public struct ListItemSelectionView<T: Hashable>: View {
                  subtitle: subtitle,
                  subtitleExtra: subtitleExtra,
                  imageStyle: imageStyle,
-                 placeholders: placeholders
-             )
+                 placeholders: placeholders,
+                 
+             ).listRowBackground(Color.clear)
          }
      }
 }

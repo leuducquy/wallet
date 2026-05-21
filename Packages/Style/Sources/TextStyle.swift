@@ -40,6 +40,7 @@ extension TextStyle {
     public static let headline = TextStyle(font: .headline, color: Colors.black)
     public static let subHeadline = TextStyle(font: .subheadline, color: Colors.secondaryText)
     public static let body = TextStyle(font: .body, color: Colors.black)
+    public static let whiteText = TextStyle(font: .body, color: Colors.white)
     public static let bodySecondary = TextStyle(font: .body, color: Colors.secondaryText)
     public static let callout = TextStyle(font: .callout, color: Colors.black)
     public static let calloutSecondary = TextStyle(font: .callout, color: Colors.secondaryText)

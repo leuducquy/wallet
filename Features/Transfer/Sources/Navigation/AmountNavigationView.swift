@@ -19,6 +19,8 @@ public struct AmountNavigationView: View {
     }
 
     public var body: some View {
+      
+       
         AmountScene(model: model)
             .onChangeObserveQuery(
                 request: $model.assetRequest,
@@ -53,9 +55,12 @@ public struct AmountNavigationView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(model.nextTitle, action: model.onSelectNextButton)
-                        .bold()
-                        .disabled(!model.isNextEnabled)
+                    Button(action: model.onSelectNextButton) {
+                        Text(model.nextTitle)
+                            .bold()
+                            .foregroundColor(model.isNextEnabled ? .white : .gray)
+                    }
+                    .disabled(!model.isNextEnabled)
                 }
             }
             .navigationDestination(for: $model.delegation) { value in

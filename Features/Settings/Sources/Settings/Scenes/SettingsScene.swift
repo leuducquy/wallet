@@ -25,26 +25,17 @@ public struct SettingsScene: View {
     }
 
     public var body: some View {
-        List {
-            Group {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 20) {
                 walletsSection
                 deviceSection
-                if model.showsRewards {
-                    referralSection
-                }
-                walletConnectSection
-                communitySection
-                aboutSection
-            }
-            .listRowInsets(.assetListRowInsets)
-        }
-        .contentMargins(.top, .scene.top, for: .scrollContent)
-        .listStyle(.insetGrouped)
-        .listSectionSpacing(.compact)
-        .navigationTitle(model.title)
-        .sheet(isPresented: $isPresentingSupport) {
-            SupportScene(model: SupportSceneViewModel(isPresentingSupport: $isPresentingSupport))
-        }
+//                walletConnectSection
+//                communitySection
+//                aboutSection
+            }.frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
+        }.padding(.top,20)
+        .background(BackGroundView())
     }
 }
 
@@ -52,23 +43,27 @@ public struct SettingsScene: View {
 
 extension SettingsScene {
     private var walletsSection: some View {
-        Section {
-            NavigationCustomLink(
-                with: ListItemView(
-                    title: model.walletsTitle,
-                    subtitle: model.walletsValue,
-                    imageStyle: .settings(assetImage: model.walletsImage)
-                ),
-                action: onOpenWallets
-            )
-
-            NavigationLink(value: Scenes.Security()) {
-                ListItemView(
-                    title: model.securityTitle,
-                    imageStyle: .settings(assetImage: model.securityImage)
+       
+            Section {
+                NavigationCustomLink(
+                    with: ListItemView(
+                        title: model.walletsTitle,
+                        subtitle: model.walletsValue,
+                        imageStyle: .settings(assetImage: model.walletsImage)
+                    )
+                       
+                        .listRowBackground(Color.clear),
+                    action: onOpenWallets
                 )
+                
+                NavigationLink(value: Scenes.Security()) {
+                    ListItemView(
+                        title: model.securityTitle,
+                        imageStyle: .settings(assetImage: model.securityImage)
+                    )
+                }
             }
-        }
+      
     }
 
     private var referralSection: some View {
@@ -84,19 +79,19 @@ extension SettingsScene {
 
     private var deviceSection: some View {
         Section {
-            NavigationLink(value: Scenes.Notifications()) {
-                ListItemView(
-                    title: model.notificationsTitle,
-                    imageStyle: .settings(assetImage: model.notificationsImage)
-                )
-            }
+//            NavigationLink(value: Scenes.Notifications()) {
+//                ListItemView(
+//                    title: model.notificationsTitle,
+//                    imageStyle: .settings(assetImage: model.notificationsImage)
+//                )
+//            }
 
-            NavigationLink(value: Scenes.PriceAlerts()) {
-                ListItemView(
-                    title: model.priceAlertsTitle,
-                    imageStyle: .settings(assetImage: model.priceAlertsImage)
-                )
-            }
+//            NavigationLink(value: Scenes.PriceAlerts()) {
+//                ListItemView(
+//                    title: model.priceAlertsTitle,
+//                    imageStyle: .settings(assetImage: model.priceAlertsImage)
+//                )
+//            }
 
             NavigationLink(value: Scenes.Preferences()) {
                 ListItemView(

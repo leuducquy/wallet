@@ -38,12 +38,12 @@ public struct InfoSheetScene: View {
                             .padding(.top, .medium)
                     }
                 })
-                .if(model.shouldShowButton) {
-                    $0.safeAreaInset(edge: .bottom) {
-                        actionButton
-                            .padding([.bottom], .medium)
-                    }
-                }
+//                .if(model.shouldShowButton) {
+//                    $0.safeAreaInset(edge: .bottom) {
+//                        actionButton
+//                            .padding([.bottom], .medium)
+//                    }
+//                }
                 .presentationDetentsForCurrentDeviceSize()
                 .safariSheet(url: $isPresentedUrl)
         }

@@ -17,26 +17,31 @@ public struct TransactionsScene: View {
     }
 
     public var body: some View {
+        
         VStack {
-            List {
-                TransactionsList(
-                    explorerService: model.explorerService,
-                    model.transactions,
-                    currency: model.currency
-                )
-                .listRowInsets(.assetListRowInsets)
+            ZStack {
+                BackGroundView()
+                List {
+                    TransactionsList(
+                        explorerService: model.explorerService,
+                        model.transactions,
+                        currency: model.currency
+                    )
+                    .listRowInsets(.assetListRowInsets)
+                }.padding(.top, 100)
+                .listSectionSpacing(.compact)
+                .scrollContentBackground(.hidden)
+                .refreshable(action: model.fetch)
             }
-            .listSectionSpacing(.compact)
-            .scrollContentBackground(.hidden)
-            .refreshable(action: model.fetch)
-        }
-        .background { Colors.insetGroupedListStyle.ignoresSafeArea() }
-        .overlay {
-            if model.transactions.isEmpty {
-                EmptyContentView(model: model.emptyContentModel)
-                    .padding(.horizontal, .medium)
+            .background { Colors.insetGroupedListStyle.ignoresSafeArea() }
+            .overlay {
+                if model.transactions.isEmpty {
+                    EmptyContentView(model: model.emptyContentModel)
+                        .padding(.horizontal, .medium)
+                }
             }
         }
+           
         .task { await model.fetch() }
     }
 }

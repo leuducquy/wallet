@@ -44,9 +44,12 @@ struct WalletNavigationStack: View {
 
     var body: some View {
         NavigationStack(path: navigationPath) {
+           
             ZStack {
-                WalletScene(model: model)
-                    .opacity(model.isPresentingSearch ? 0 : 1)
+             
+                if !model.isPresentingSearch {
+                        WalletScene(model: model)
+                    }
 
                 if model.isPresentingSearch {
                     WalletSearchScene(
@@ -80,14 +83,14 @@ struct WalletNavigationStack: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if !model.isPresentingSearch {
-                    ToolbarItem(placement: .principal) {
-                        WalletBarView(
-                            model: model.walletBarModel,
-                            action: model.onSelectWalletBar
-                        )
-                        .liquidGlass()
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
+//                    ToolbarItem(placement: .principal) {
+//                        WalletBarView(
+//                            model: model.walletBarModel,
+//                            action: model.onSelectWalletBar
+//                        )
+//                        .liquidGlass()
+//                    }
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: model.onToggleSearch) {
                             model.searchImage
                         }

@@ -12,6 +12,9 @@ public struct CurrencyScene: View {
     }
 
     public var body: some View {
+        ZStack {
+            BackGroundView()
+       
         List(model.list) { section in
             Section(section.section) {
                 ForEach(section.values) {
@@ -28,9 +31,13 @@ public struct CurrencyScene: View {
                         try? model.setCurrency($0)
                     }
                 }
-            }
+            }.listRowBackground(Color.clear)
         }
         .listSectionSpacing(.compact)
         .navigationTitle(model.title)
+        }.padding(.top,100)
+            .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
     }
 }

@@ -16,26 +16,36 @@ public struct StakeScene: View {
     }
 
     public var body: some View {
-        List {
-            stakeInfoSection
-            if model.showManage {
-                stakeSection
-            }
-            if model.showTronResources {
-                resourcesSection
-            }
-            delegationsSection
-        }
-        .listSectionSpacing(.compact)
-        .refreshable {
-            await model.fetch()
-        }
-        .navigationTitle(model.title)
-        .taskOnce {
-            Task {
-                await model.fetch()
-            }
-        }
+        ScrollView {
+            
+                LazyVStack(alignment: .leading, spacing: 12) {
+                    stakeInfoSection
+                    if model.showManage {
+                        stakeSection
+                    }
+                    if model.showTronResources {
+                        resourcesSection
+                    }
+                    delegationsSection
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.vertical,16).tint(.white)
+                .refreshable {
+                    await model.fetch()
+                }
+                .navigationTitle(model.title)
+                .taskOnce {
+                    Task {
+                        await model.fetch()
+                    }
+                }
+            }.background(BackGroundView())
+            .padding(.top,100)
+                    .listStyle(.plain)
+                            .scrollContentBackground(.hidden)
+                            .background(Color.clear)
+        
     }
 }
 
@@ -43,12 +53,18 @@ public struct StakeScene: View {
 
 extension StakeScene {
     private var stakeSection: some View {
-        Section(Localized.Common.manage) {
+        Section(   header: Text(Localized.Common.manage)
+            .textStyle(.whiteText) 
+            .frame(maxWidth: .infinity, alignment: .center)
+           ) {
             if model.showStake {
                 NavigationLink(value: model.stakeDestination) {
-                    ListItemView(title: model.stakeTitle)
+                    ListItemView(title: model.stakeTitle, )
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .enabled(model.isStakeEnabled)
+                .enabled(model.isStakeEnabled).tint(.white)
+                
+               
             }
             
             if model.showFreeze {
@@ -75,7 +91,9 @@ extension StakeScene {
     }
 
     private var delegationsSection: some View {
-        Section(model.delegationsSectionTitle) {
+        Section(header: Text(model.delegationsSectionTitle)
+            .textStyle(.whiteText)
+            .frame(maxWidth: .infinity, alignment: .center)) {
             switch model.delegationsState {
             case .noData:
                 EmptyContentView(model: model.emptyContentModel)
@@ -85,23 +103,26 @@ extension StakeScene {
                     .id(UUID())
             case .data(let delegations):
                 ForEach(delegations) { delegation in
+                   
                     NavigationLink(value: delegation.navigationDestination) {
                         StakeDelegationView(delegation: delegation)
-                    }
+                    } .tint(.clear)
                 }
-                .listRowInsets(.assetListRowInsets)
+              
             case .error(let error):
                 ListItemErrorView(errorTitle: Localized.Errors.errorOccured, error: error)
             }
-        }
+        }.textStyle(.whiteText)
     }
 
     private var stakeInfoSection: some View {
         Section(model.assetTitle) {
             ListItemView(
                 title: model.stakeAprTitle,
+                titleStyle: .whiteText,
                 subtitle: model.stakeAprValue,
-                infoAction: model.onAprInfo
+                infoAction: model.onAprInfo,
+                
             )
             ListItemView(
                 title: model.lockTimeTitle,
@@ -111,7 +132,7 @@ extension StakeScene {
             if let minAmountValue = model.minAmountValue {
                 ListItemView(title: model.minAmountTitle, subtitle: minAmountValue)
             }
-        }
+        }.textStyle(.whiteText,)
     }
 
     private var resourcesSection: some View {
@@ -125,7 +146,7 @@ extension StakeScene {
                 title: model.bandwidthTitle,
                 subtitle: model.bandwidthText
             )
-        }
+        }.textStyle(.whiteText)
         
     }
 }

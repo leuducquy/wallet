@@ -7,24 +7,28 @@ import Primitives
 import PrimitivesComponents
 import struct Staking.StakeValidatorViewModel
 import struct Staking.ValidatorView
-
+import Foundation
 struct AmountScene: View {
     @FocusState private var focusedField: Bool
-
+    @State private var keyboardHeight: CGFloat = 0
+   
     private var model: AmountSceneViewModel
 
     public init(model: AmountSceneViewModel) {
         self.model = model
     }
-
+   
     var body: some View {
         @Bindable var model = model
+        ZStack {
+            BackGroundView().ignoresSafeArea()
+        
         List {
             CurrencyInputValidationView(
                 model: $model.amountInputModel,
                 config: model.inputConfig,
                 infoAction: model.infoAction(for:)
-            )
+            ).listRowBackground(Color.clear)
             .padding(.top, .medium)
             .listGroupRowStyle()
             .disabled(model.isInputDisabled)
@@ -37,15 +41,22 @@ struct AmountScene: View {
                         title: model.assetName,
                         balance: model.balanceText,
                         secondary: {
-                            Button(
-                                model.maxTitle,
-                                action: model.onSelectMaxButton
+                            Button(action: model.onSelectMaxButton) {
+                                Text(model.maxTitle)
+                                    .font(.footnote)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.white) 
+                            }
+                            .buttonStyle(
+                                .listEmpty(
+                                    paddingHorizontal: .medium,
+                                    paddingVertical: .small
+                                )
                             )
-                            .buttonStyle(.listEmpty(paddingHorizontal: .medium, paddingVertical: .small))
                             .fixedSize()
                         }
                     )
-                }
+                }.listRowBackground(Color.clear)
             }
 
             if let infoText = model.infoText {
@@ -59,7 +70,7 @@ struct AmountScene: View {
                                 .textStyle(.calloutSecondary)
                         }
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
 
             switch model.type {
@@ -67,7 +78,11 @@ struct AmountScene: View {
                 EmptyView()
             case .stake, .stakeUnstake, .stakeRedelegate, .stakeWithdraw:
                 if let viewModel = model.stakeValidatorViewModel {
-                    Section(model.validatorTitle) {
+                    Section(header: Text(model.validatorTitle)
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .textCase(nil)         ) {
                         if model.isSelectValidatorEnabled {
                             NavigationCustomLink(
                                 with: ValidatorView(model: viewModel),
@@ -76,19 +91,19 @@ struct AmountScene: View {
                         } else {
                             ValidatorView(model: viewModel)
                         }
-                    }
+                    }.listRowBackground(Color.clear)
                 }
             case .freeze:
                 if model.isSelectResourceEnabled {
                     Section {
                         Picker("", selection: $model.selectedResource) {
                             ForEach(model.availableResources) { resource in
-                                Text(resource.title).tag(resource)
+                                Text(resource.title,).tag(resource).textStyle(.whiteText)
                             }
                         }
                         .pickerStyle(.segmented)
                         .frame(width: 200)
-                    }
+                    }.listRowBackground(Color.clear)
                     .cleanListRow()
                 }
             case .perpetual:
@@ -102,7 +117,7 @@ struct AmountScene: View {
                             ),
                             action: model.onSelectLeverage
                         )
-                    }
+                    }.listRowBackground(Color.clear)
                 }
                 if model.isAutocloseEnabled {
                     Section {
@@ -114,7 +129,7 @@ struct AmountScene: View {
                             ),
                             action: model.onSelectAutoclose
                         )
-                    }
+                    }.listRowBackground(Color.clear)
                 }
             }
         }
@@ -133,6 +148,26 @@ struct AmountScene: View {
         .navigationTitle(model.title)
         .onAppear(perform: model.onAppear)
         .onChange(of: model.focusField, onChangeFocus)
+        } .onReceive(
+            NotificationCenter.default.publisher(
+                for: UIResponder.keyboardWillChangeFrameNotification
+            )
+        ) { notification in
+            if let frame = notification
+                .userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+
+                keyboardHeight = max(
+                    0,
+                    UIScreen.main.bounds.height - frame.origin.y
+                )
+            }
+        }
+        .safeAreaInset(edge: .top) {
+            Color.clear.frame(height: keyboardHeight + 150)
+        }
+                .listStyle(.plain)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
     }
 }
 

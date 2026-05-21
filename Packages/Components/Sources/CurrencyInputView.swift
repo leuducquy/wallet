@@ -124,7 +124,7 @@ public struct CurrencyInputView: View {
 
     var secondaryTextView: some View {
         Text(secondaryText)
-            .textStyle(.calloutSecondary.weight(.medium))
+            .textStyle(.whiteText.weight(.medium))
             .frame(minHeight: .list.image)
     }
 }

@@ -22,6 +22,7 @@ public struct ValidatorSelectionView: View {
     }
     
     public var body: some View {
+        
         HStack {
             ValidatorImageView(validator: value.value)
             ListItemSelectionView(

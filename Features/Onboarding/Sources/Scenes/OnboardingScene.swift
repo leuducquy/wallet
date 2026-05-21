@@ -4,43 +4,53 @@ import SwiftUI
 import Style
 import Components
 
-public struct OnboardingScene: View {
+public struct OnboardingScene: OverlayView {
+   
+    
     private let model: OnboardingViewModel
 
     public init(model: OnboardingViewModel) {
         self.model = model
     }
 
-    public var body: some View {
+    public var content: some View {
         ZStack {
             // Background
-            Image("splashscreen")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+//            Image("splashscreen")
+//                .resizable()
+//                .scaledToFill()
+//                .ignoresSafeArea()
             VStack {
                 Spacer()
                 VStack(alignment: .center, spacing: 24) {
-                    StateButton(
-                        text: model.createWalletTitle,
-                        action: model.onCreateWallet,
-                        
-                    )
-                    StateButton(
-                        text: model.importWalletTitle,
-                        action: model.onImportWallet,
-                        
-                    )
+                  
+                    PrimaryGradientButton(title:  model.createWalletTitle, isDisabled: false) {
+                        model.onCreateWallet()
+                    }
+                    .padding(.horizontal, 10)
+
+                    
+//                    StateButton(
+//                        text: model.createWalletTitle,
+//                        action: model.onCreateWallet,
+//                      
+//                        
+//                    )
+                    PrimaryGradientButton(title:  model.importWalletTitle, isDisabled: false) {
+                        model.onImportWallet()
+                    }
+                    .padding(.horizontal, 10)
+                   
                 }
                 .frame(maxWidth: .scene.button.maxWidth)
                 .padding(.scene.bottom * 6)
             }
-            .overlay(
-                LogoView()
-            )
+            
             .frame(maxWidth: .infinity)
             
             .navigationTitle(model.title)
-        }
+        }.overlay(
+            LogoView()
+        )
     }
 }

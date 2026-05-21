@@ -13,8 +13,8 @@ import WalletTab
 import Transactions
 import Swap
 import Assets
-
-struct MainTabView: View {
+import Components
+struct MainTabView: OverlayView {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.walletsService) private var walletsService
     @Environment(\.transactionsService) private var transactionsService
@@ -49,7 +49,7 @@ struct MainTabView: View {
         _transactions = Query(constant: model.transactionsCountRequest)
     }
 
-    var body: some View {
+    var content: some View {
         TabView(selection: tabViewSelection) {
             WalletNavigationStack(
                 model: WalletSceneViewModel(
@@ -74,20 +74,20 @@ struct MainTabView: View {
                 .tag(TabItem.markets)
             }
             
-            if model.isCollectionsEnabled {
-                CollectionsNavigationStack(
-                    model: CollectionsViewModel(
-                        nftService: nftService,
-                        walletService: walletService,
-                        wallet: model.wallet
-                    ),
-                    isPresentingSelectedAssetInput: $isPresentingSelectedAssetInput
-                )
-                .tabItem {
-                    tabItem(Localized.Nft.collections, Images.Tabs.collections)
-                }
-                .tag(TabItem.collections)
-            }
+//            if model.isCollectionsEnabled {
+//                CollectionsNavigationStack(
+//                    model: CollectionsViewModel(
+//                        nftService: nftService,
+//                        walletService: walletService,
+//                        wallet: model.wallet
+//                    ),
+//                    isPresentingSelectedAssetInput: $isPresentingSelectedAssetInput
+//                )
+//                .tabItem {
+//                    tabItem(Localized.Nft.collections, Images.Tabs.collections)
+//                }
+//                .tag(TabItem.collections)
+//            }
             
             TransactionsNavigationStack(
                 model: TransactionsViewModel(
@@ -112,7 +112,7 @@ struct MainTabView: View {
                 tabItem(Localized.Settings.title, Images.Tabs.settings)
             }
             .tag(TabItem.settings)
-        }
+        }.contentMargins(.bottom, 10, for: .scrollContent)
         .sheet(item: $isPresentingSelectedAssetInput) { input in
             SelectedAssetNavigationStack(
                 input: input,

@@ -12,6 +12,10 @@ public struct StakeDetailScene: View {
     }
 
     public var body: some View {
+        ZStack{
+            BackGroundView()
+       
+        
         List {
             Section { } header: {
                 WalletHeaderView(
@@ -21,7 +25,7 @@ public struct StakeDetailScene: View {
                     onInfoAction: nil
                 )
                 .padding(.top, .small)
-            }
+            }.listRowBackground(Color.clear)
             .cleanListRow()
 
             Section {
@@ -42,7 +46,7 @@ public struct StakeDetailScene: View {
                 if let title = model.completionDateTitle, let subtitle = model.completionDateText {
                     ListItemView(title: title, subtitle: subtitle)
                 }
-            }
+            }.listRowBackground(Color.clear)
 
             if let rewardsText = model.model.rewardsText {
                 Section {
@@ -55,7 +59,7 @@ public struct StakeDetailScene: View {
                         subtitleStyleExtra: model.model.subtitleExtraStyle,
                         imageStyle: model.assetImageStyle
                     )
-                }
+                }.listRowBackground(Color.clear)
             }
 
             //TODO: Remove NavigationCustomLink usage in favor of NavigationLink()
@@ -81,10 +85,15 @@ public struct StakeDetailScene: View {
                             model.onWithdrawAction()
                         }
                     }
-                }
+                }.listRowBackground(Color.clear)
             }
-        }
+        }.padding(.top,100)
+                .listStyle(.plain)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
         .navigationTitle(model.title)
         .listSectionSpacing(.compact)
+        
+    }
     }
 }

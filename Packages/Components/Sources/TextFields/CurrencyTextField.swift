@@ -49,7 +49,7 @@ public struct CurrencyTextField: View {
             }
             TextField(placeholder, text: $text)
                 .keyboardType(keyboardType)
-                .foregroundStyle(Colors.black)
+                .foregroundStyle(Colors.white)
                 .font(.system(size: Constants.fontSize, weight: Constants.fontWeight))
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.plain)
@@ -58,6 +58,7 @@ public struct CurrencyTextField: View {
                 .frame(minWidth: Constants.minWidth, maxWidth: Constants.maxWidth)
                 .fixedSize(horizontal: true, vertical: false)
                 .disabled(!isEnabled)
+                .textStyle(.whiteText)
 
             if currencyPosition == .trailing {
                 currencySymbolView

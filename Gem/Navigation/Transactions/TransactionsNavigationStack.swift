@@ -30,7 +30,7 @@ struct TransactionsNavigationStack: View {
     }
 
     var body: some View {
-        NavigationStack(path: navigationPath) {
+      //  NavigationStack(path: navigationPath) {
             TransactionsScene(model: model)
                 .observeQuery(
                     request: $model.filterModel.request,
@@ -42,11 +42,11 @@ struct TransactionsNavigationStack: View {
                     model.onChangeWallet
                 )
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        FilterButton(
-                            isActive: model.filterModel.isAnyFilterSpecified,
-                            action: model.onSelectFilterButton)
-                    }
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        FilterButton(
+//                            isActive: model.filterModel.isAnyFilterSpecified,
+//                            action: model.onSelectFilterButton)
+//                    }
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle(model.title)
@@ -79,6 +79,6 @@ struct TransactionsNavigationStack: View {
                         isPresentingSelectType: $model.isPresentingSelectAssetType
                     )
                 }
-        }
+       // }
     }
 }
