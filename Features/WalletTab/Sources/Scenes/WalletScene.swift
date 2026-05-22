@@ -97,23 +97,7 @@ public struct WalletScene: View {
                     }
                 }
 
-                Section {
-                    HStack {
-                        Spacer()
-                        Button(action: model.onSelectManage) {
-                            Images.System.plus
-                                .foregroundColor(.white)
-                                .frame(width: 24, height: 24)
-                        }
-                        .frame(width: 40, height: 40)
-                        .background(Colors.green)
-                        .cornerRadius(12)
-                        .buttonStyle(.plain)
-                    }
-                    .padding(.vertical, .small)
-                }
-                .listRowBackground(Colors.listStyleColor)
-                .cleanListRow()
+               
 
                 Section {
                     WalletAssetsList(

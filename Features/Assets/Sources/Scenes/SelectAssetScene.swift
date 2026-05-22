@@ -68,69 +68,79 @@ public struct SelectAssetScene: View {
     }
 
     var list: some View {
-        List {
-            Section {} header: {
-                TagsView(
-                    tags: model.searchModel.tagsViewModel.items,
-                    onSelect: { model.setSelected(tag: $0.tag) }
-                )
-                .isVisible(model.showTags)
-            }
-            .textCase(nil)
-            .listRowInsets(EdgeInsets())
-            .if(model.showRecent) {
-                $0.listSectionSpacing(.small)
-            }
-
-            if model.showRecent {
-                RecentActivitySectionView(models: model.activityModels) { assetModel in
-                    switch model.selectType {
-                    case .send, .receive, .buy:
-                        NavigationLink(value: SelectAssetInput(type: model.selectType, assetAddress: model.assetAddress(for: assetModel.asset))) {
-                            AssetChipView(model: assetModel)
+        ZStack {
+            BackGroundView()
+            List {
+                Section {} header: {
+                    TagsView(
+                        tags: model.searchModel.tagsViewModel.items,
+                        onSelect: { model.setSelected(tag: $0.tag) }
+                    )
+                    .isVisible(model.showTags)
+                }.cleanListRow()
+                    .listRowBackground(Color.clear).padding(.top, 100)
+                .textCase(nil)
+                .listRowInsets(EdgeInsets())
+                .if(model.showRecent) {
+                    $0.listSectionSpacing(.small)
+                }
+                
+                if model.showRecent {
+                    RecentActivitySectionView(models: model.activityModels) { assetModel in
+                        switch model.selectType {
+                        case .send, .receive, .buy:
+                            NavigationLink(value: SelectAssetInput(type: model.selectType, assetAddress: model.assetAddress(for: assetModel.asset))) {
+                                AssetChipView(model: assetModel)
+                            }
+                        case .swap:
+                            Button {
+                                model.selectAsset(asset: assetModel.asset)
+                            } label: {
+                                AssetChipView(model: assetModel)
+                            }
+                        case .manage, .priceAlert, .deposit, .withdraw:
+                            EmptyView()
                         }
-                    case .swap:
-                        Button {
-                            model.selectAsset(asset: assetModel.asset)
-                        } label: {
-                            AssetChipView(model: assetModel)
+                    }
+                }
+                
+                if model.enablePopularSection && model.sections.popular.isNotEmpty {
+                    Section {
+                        assetsList(assets: model.sections.popular)
+                    } header: {
+                        HStack {
+                            Images.System.starFill
+                            Text(Localized.Common.popular)
                         }
-                    case .manage, .priceAlert, .deposit, .withdraw:
-                        EmptyView()
-                    }
+                    }.cleanListRow()
+                        .listRowBackground(Color.clear)
+                    .listRowInsets(.assetListRowInsets)
                 }
-            }
-
-            if model.enablePopularSection && model.sections.popular.isNotEmpty {
+                
+                if model.sections.pinned.isNotEmpty {
+                    Section {
+                        assetsList(assets: model.sections.pinned)
+                    } header: {
+                        HStack {
+                            Images.System.pin
+                            Text(Localized.Common.pinned)
+                        }
+                    }.cleanListRow()
+                        .listRowBackground(Color.clear)
+                    .listRowInsets(.assetListRowInsets)
+                }
+                
                 Section {
-                    assetsList(assets: model.sections.popular)
-                } header: {
-                    HStack {
-                        Images.System.starFill
-                        Text(Localized.Common.popular)
-                    }
-                }
+                    assetsList(assets: model.sections.assets)
+                }.cleanListRow()
+                    .listRowBackground(Color.clear)
                 .listRowInsets(.assetListRowInsets)
-            }
-
-            if model.sections.pinned.isNotEmpty {
-                Section {
-                    assetsList(assets: model.sections.pinned)
-                } header: {
-                    HStack {
-                        Images.System.pin
-                        Text(Localized.Common.pinned)
-                    }
-                }
-                .listRowInsets(.assetListRowInsets)
-            }
-
-            Section {
-                assetsList(assets: model.sections.assets)
-            }
-            .listRowInsets(.assetListRowInsets)
+            } .background(Color.clear).listRowBackground(Color.clear)
+                .listStyle(.plain)
+                .padding(.leading, 30)
+                .contentMargins([.top], .extraSmall, for: .scrollContent)
         }
-        .contentMargins([.top], .extraSmall, for: .scrollContent)
+      
     }
 
     func assetsList(assets: [AssetData]) -> some View {

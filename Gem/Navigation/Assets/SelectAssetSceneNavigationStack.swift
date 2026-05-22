@@ -42,6 +42,7 @@ struct SelectAssetSceneNavigationStack: View {
 
     var body: some View {
         NavigationStack(path: $navigationPath) {
+            
             SelectAssetScene(
                 model: model
             )
