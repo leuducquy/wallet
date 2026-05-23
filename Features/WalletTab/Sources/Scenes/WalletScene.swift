@@ -39,22 +39,24 @@ public struct WalletScene: View {
                 .cleanListRow()
 
                 Section {
-                    Button(action: model.onSelectManage) {
-                        HStack(spacing: 6) {
+                    HStack {
+                        Spacer()
+                        Button(action: model.onSelectManage) {
                             Images.System.plus
-                            
-                            Text("Add Coin")
-                                .foregroundColor(Colors.black)
-                                .font(.subheadline)
+                                .foregroundColor(.white)
+                                .frame(width: 24, height: 24)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.vertical, .small)
+                        .frame(width: 40, height: 40)
+                        .background(Color.green)
+                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text("Add Coin"))
                     }
-                    .buttonStyle(.borderless)
-                    .tint(.green)
-                    
+                    .frame(maxWidth: .infinity)
                 }
-                .listRowBackground(Colors.listStyleColor)
+                .listRowBackground(Color.clear)
+               
                 .cleanListRow()
 
                 if model.showPerpetuals {

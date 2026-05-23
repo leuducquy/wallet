@@ -30,7 +30,7 @@ public struct RoundButton: View {
                     .font(.system(size: 20).weight(.medium))
                     .foregroundStyle(Colors.whiteSolid)
                     .frame(size: 48)
-                    .background(Colors.orange)
+                    .background(Colors.greenLight)
                     .clipShape(Circle())
                     .opacity(isEnabled ? 1 : 0.5)
                     .liquidGlass()

@@ -78,7 +78,7 @@ public struct SelectAssetScene: View {
                     )
                     .isVisible(model.showTags)
                 }.cleanListRow()
-                    .listRowBackground(Color.clear).padding(.top, 100)
+                    .listRowBackground(Color.clear).padding(.top, 150,)
                 .textCase(nil)
                 .listRowInsets(EdgeInsets())
                 .if(model.showRecent) {
