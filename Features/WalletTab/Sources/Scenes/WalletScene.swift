@@ -41,17 +41,24 @@ public struct WalletScene: View {
                 Section {
                     HStack {
                         Spacer()
-                        Button(action: model.onSelectManage) {
-                            Images.System.plus
-                                .foregroundColor(.white)
-                                .frame(width: 24, height: 24)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                        .frame(width: 40, height: 40)
-                        .background(Color.green)
-                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(Text("Add Coin"))
+                        RoundButton(
+                            title: "Add Coin",
+                            image:  Images.System.plus,
+                            isEnabled: true
+                        ) {
+                            model.onSelectManage()
+                        }.padding(.trailing, 10)
+//                        Button(action: model.onSelectManage) {
+//                            Images.System.plus
+//                                .foregroundColor(.white)
+//                                .frame(width: 24, height: 24)
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        }
+//                        .frame(width: 40, height: 40)
+//                        .background(Colors.greenLight)
+//                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+//                        .buttonStyle(.plain)
+//                        .accessibilityLabel(Text("Add Coin"))
                     }
                     .frame(maxWidth: .infinity)
                 }
@@ -121,8 +128,11 @@ public struct WalletScene: View {
 //                    .padding(.medium)
 //                    .frame(maxWidth: .infinity)
 //                }
-            }.padding(.bottom, 100)
-                .ignoresSafeArea(.keyboard)
+            }
+            .safeAreaInset(edge: .bottom) {
+                Color.clear.frame(height: 40)
+            }
+            .ignoresSafeArea(.keyboard)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
             

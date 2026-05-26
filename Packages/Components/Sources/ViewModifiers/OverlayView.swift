@@ -17,6 +17,7 @@ public extension OverlayView {
                 .ignoresSafeArea()
               
             content
+        
         }.background(Color.clear)
     }
 }

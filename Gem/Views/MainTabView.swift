@@ -14,7 +14,9 @@ import Transactions
 import Swap
 import Assets
 import Components
-struct MainTabView: OverlayView {
+struct MainTabView: View {
+   
+    
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.walletsService) private var walletsService
     @Environment(\.transactionsService) private var transactionsService
@@ -49,7 +51,7 @@ struct MainTabView: OverlayView {
         _transactions = Query(constant: model.transactionsCountRequest)
     }
 
-    var content: some View {
+    var body: some View {
         TabView(selection: tabViewSelection) {
             WalletNavigationStack(
                 model: WalletSceneViewModel(
@@ -112,7 +114,8 @@ struct MainTabView: OverlayView {
                 tabItem(Localized.Settings.title, Images.Tabs.settings)
             }
             .tag(TabItem.settings)
-        }.contentMargins(.bottom, 10, for: .scrollContent)
+        }
+       
         .sheet(item: $isPresentingSelectedAssetInput) { input in
             SelectedAssetNavigationStack(
                 input: input,
@@ -149,6 +152,7 @@ struct MainTabView: OverlayView {
                 break
             }
         }
+       
     }
 }
 

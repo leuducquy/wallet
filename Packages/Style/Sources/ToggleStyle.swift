@@ -7,14 +7,28 @@ public struct AppToggleStyle: ToggleStyle {
     var tintColor: Color
     
     public init(
-        tintColor: Color = Colors.green
+        tintColor: Color = Colors.greenLight
     ) {
         self.tintColor = tintColor
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        Toggle(configuration)
-            .tint(Colors.blue)
+        HStack(spacing: .space12) {
+            configuration.label
+            Spacer()
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(configuration.isOn ? tintColor : Colors.gray)
+                    .frame(width: 50, height: 30)
+                Circle()
+                    .fill(Colors.black)
+                    .frame(width: 24, height: 24)
+                    .offset(x: configuration.isOn ? 10 : -10)
+            }
+            .animation(.easeInOut(duration: 0.15), value: configuration.isOn)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { configuration.isOn.toggle() }
     }
 }
 
