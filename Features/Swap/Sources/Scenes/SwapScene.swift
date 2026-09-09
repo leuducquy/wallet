@@ -21,6 +21,9 @@ public struct SwapScene: View {
     }
 
     public var body: some View {
+        ZStack {
+            BackGroundView()
+      
         List {
             swapFromSectionView
             swapToSectionView
@@ -33,8 +36,12 @@ public struct SwapScene: View {
             }
         }
         .listSectionSpacing(.compact)
+        .scrollContentBackground(.hidden)
+        .background(Color.clear)
+        .padding(.top, 100)
+   
         .safeAreaView {
-            bottomActionView
+            bottomActionView.padding(.bottom,200)
                 .confirmationDialog(
                     model.swapDetailsViewModel?.highImpactWarningTitle ?? "",
                     presenting: $model.isPresentingPriceImpactConfirmation,
@@ -50,7 +57,7 @@ public struct SwapScene: View {
                         Text(model.isPresentingPriceImpactConfirmation ?? "")
                     }
                 )
-        }
+        }.padding(.bottom,200)
         .navigationTitle(model.title)
         .onChangeObserveQuery(
             request: $model.fromAssetRequest,
@@ -85,6 +92,7 @@ public struct SwapScene: View {
                 model.focusField = .from
             }
         }
+    }
     }
 }
 

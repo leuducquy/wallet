@@ -26,8 +26,10 @@ public struct HeaderButtonsView: View {
     public var body: some View {
         HStack(alignment: .center, spacing: 2) {
         
-            ForEach(buttons) {
-                buttonView(for: $0)
+            ForEach(buttons) { button in
+                if button.type != .buy {
+                    buttonView(for: button)
+                }
             }
         }
     }

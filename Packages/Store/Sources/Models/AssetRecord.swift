@@ -84,7 +84,7 @@ extension AssetRecord: CreateTable {
             $0.column(Columns.isSellable.name, .boolean)
                 .defaults(to: false)
             $0.column(Columns.isSwappable.name, .boolean)
-                .defaults(to: false)
+                .defaults(to: true)
             $0.column(Columns.isStakeable.name, .boolean)
                 .defaults(to: false)
             $0.column(Columns.rank.name, .numeric)
@@ -107,7 +107,7 @@ extension Asset {
             isEnabled: false,
             isBuyable: false,
             isSellable: false,
-            isSwappable: false,
+            isSwappable: true,
             isStakeable: false,
             rank: 0
         )
