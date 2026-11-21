@@ -47,10 +47,10 @@ public struct PrimaryGradientButton: View {
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 14)
-                .background(
+                .background {
                     LinearGradient.primary
                         .opacity(isDisabled ? 0.4 : 1)
-                )
+                }
                 .clipShape(Capsule())
         }
         .disabled(isDisabled)

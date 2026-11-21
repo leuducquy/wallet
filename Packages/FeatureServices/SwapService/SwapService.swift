@@ -22,6 +22,11 @@ import enum Primitives.Chain
 import enum Primitives.EVMChain
 
 public final class SwapService: Sendable, SwappableChainsProvider {
+    private static let evmReferralAddress = "0xb4054277eeC9fD6d0115c6C8e5b07c55A30F29d9"
+    private static let customReferralChains: Set<Chain> = [
+        .ethereum, .smartChain, .base, .polygon, .monad, .optimism, .arbitrum,
+    ]
+
     private let swapper: GemSwapperProtocol
     private let swapConfig = GemstoneConfig.shared.getSwapConfig()
 
@@ -33,9 +38,15 @@ public final class SwapService: Sendable, SwappableChainsProvider {
         self.init(swapper: GemSwapper(rpcProvider: NativeProvider(nodeProvider: nodeProvider)))
     }
 
-    private func getReferralFees() -> SwapReferralFees {
-        // TODO: In the future fees could be based on the asset you are swapping
-        swapConfig.referralFee
+    private func getReferralFees(from sourceChain: Chain, to destinationChain: Chain) -> SwapReferralFees {
+        var fees = swapConfig.referralFee
+        if Self.customReferralChains.contains(sourceChain) {
+            fees.evm.address = Self.evmReferralAddress
+        }
+        if Self.customReferralChains.contains(destinationChain) {
+            fees.evmBridge.address = Self.evmReferralAddress
+        }
+        return fees
     }
 
     public func supportedChains() -> [Chain] {
@@ -61,7 +72,7 @@ public final class SwapService: Sendable, SwappableChainsProvider {
             mode: .exactIn,
             options: SwapperOptions(
                 slippage: getDefaultSlippage(chain: fromAsset.id.chain.rawValue),
-                fee: getReferralFees(),
+                fee: getReferralFees(from: fromAsset.id.chain, to: toAsset.id.chain),
                 preferredProviders: [],
                 useMaxAmount: useMaxAmount
             )
