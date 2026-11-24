@@ -8,7 +8,7 @@ import Primitives
 
 public struct WalletHeaderView: View {
     private let model: any HeaderViewModel
-    private var showTwoButton : Bool = false
+    private let onManageAction: (@MainActor () -> Void)?
     @Binding var isHideBalanceEnalbed: Bool
 
     private let onHeaderAction: HeaderButtonAction?
@@ -19,13 +19,13 @@ public struct WalletHeaderView: View {
         isHideBalanceEnalbed: Binding<Bool>,
         onHeaderAction: HeaderButtonAction?,
         onInfoAction: VoidAction,
-        showTwoButton: Bool = false
+        onManageAction: (@MainActor () -> Void)? = nil
     ) {
         self.model = model
         _isHideBalanceEnalbed = isHideBalanceEnalbed
         self.onHeaderAction = onHeaderAction
         self.onInfoAction = onInfoAction
-        self.showTwoButton = showTwoButton
+        self.onManageAction = onManageAction
     }
 
     public var body: some View {
@@ -87,9 +87,12 @@ public struct WalletHeaderView: View {
                     .cornerRadius(.medium)
                     .padding(.top, .space10)
                 }
+                if let onManageAction {
+                    HeaderButtonsView(buttons: [], onManageAction: onManageAction)
+                }
 
             case false:
-                HeaderButtonsView(buttons:showTwoButton ? [model.buttons[0],model.buttons[1]] : model.buttons, action: onHeaderAction)
+                HeaderButtonsView(buttons: model.buttons, action: onHeaderAction, onManageAction: onManageAction)
                     .padding(.top, .space8)
             }
         }
@@ -114,6 +117,6 @@ public struct WalletHeaderView: View {
         model: model,
         isHideBalanceEnalbed: .constant(false),
         onHeaderAction: .none,
-        onInfoAction: .none, showTwoButton: false
+        onInfoAction: .none
     )
 }

@@ -4,32 +4,41 @@ import Foundation
 import SwiftUI
 import Components
 import Primitives
+import Style
 
 public typealias HeaderButtonAction = @MainActor @Sendable (HeaderButtonType) -> Void
 
 public struct HeaderButtonsView: View {
     private let buttons: [HeaderButton]
-    private var action: HeaderButtonAction?
+    private let action: HeaderButtonAction?
+    private let onManageAction: (@MainActor () -> Void)?
 
     var maxWidth: CGFloat {
-        buttons.count > 3 ? 84 : 94
+        buttons.count + (onManageAction == nil ? 0 : 1) > 3 ? 84 : 94
     }
 
     public init(
         buttons: [HeaderButton],
-        action: HeaderButtonAction? = nil
+        action: HeaderButtonAction? = nil,
+        onManageAction: (@MainActor () -> Void)? = nil
     ) {
         self.buttons = buttons
         self.action = action
+        self.onManageAction = onManageAction
     }
 
     public var body: some View {
-        HStack(alignment: .center, spacing: 2) {
-        
+        HStack(alignment: .center, spacing: .extraSmall) {
             ForEach(buttons) { button in
                 if button.type != .buy {
                     buttonView(for: button)
                 }
+            }
+            if let onManageAction {
+                RoundButton(title: "Add Coin", image: Images.System.plus) {
+                    onManageAction()
+                }
+                .frame(maxWidth: maxWidth)
             }
         }
     }

@@ -32,8 +32,7 @@ public struct TotalValueRequest: ValueObservationQueryable {
     private func fetchWalletBalance(_ db: Database) throws -> Double {
         try AssetRecord
             .including(optional: AssetRecord.price)
-            .including(optional: AssetRecord.balance)
-            .joining(required: AssetRecord.balance
+            .including(required: AssetRecord.balance
                 .filter(BalanceRecord.Columns.walletId == walletId)
                 .filter(BalanceRecord.Columns.isEnabled == true)
             )

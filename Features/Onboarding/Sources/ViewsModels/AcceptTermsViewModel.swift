@@ -8,7 +8,7 @@ import Localization
 
 @Observable
 final class AcceptTermsViewModel {
-    let onNext: VoidAction
+    private let onNext: VoidAction
     
     init(onNext: VoidAction) {
         self.onNext = onNext
@@ -18,13 +18,18 @@ final class AcceptTermsViewModel {
         PublicConstants.url(.termsOfService)
     }
     
+    var privacyPolicyURL: URL {
+        PublicConstants.url(.privacyPolicy)
+    }
+
     let title: String = Localized.Onboarding.AcceptTerms.title
     let message: String = Localized.Onboarding.AcceptTerms.message
 
     var items: [TermItemViewModel] = [
         .init(message: Localized.Onboarding.AcceptTerms.Item1.message),
         .init(message: Localized.Onboarding.AcceptTerms.Item2.message),
-        .init(message: Localized.Onboarding.AcceptTerms.Item3.message)
+        .init(message: Localized.Onboarding.AcceptTerms.Item3.message),
+        .init(message: Localized.Consent.policies)
     ]
     
     var isConfirmed: Bool {
@@ -33,5 +38,10 @@ final class AcceptTermsViewModel {
     
     var state: StateViewType<Bool> {
         isConfirmed ? .data(true) : .noData
+    }
+
+    func onAccept() {
+        guard isConfirmed else { return }
+        onNext?()
     }
 }

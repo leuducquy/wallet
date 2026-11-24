@@ -29,6 +29,7 @@ struct WalletNavigationStack: View {
     @Environment(\.balanceService) private var balanceService
     @Environment(\.activityService) private var activityService
 
+    @State private var pendingSwapInput: SelectedAssetInput?
     @State private var model: WalletSceneViewModel
 
     init(model: WalletSceneViewModel) {
@@ -40,6 +41,13 @@ struct WalletNavigationStack: View {
             get: { navigationState.wallet },
             set: { navigationState.wallet = $0 }
         )
+    }
+
+    private func presentPendingSwap() {
+        if let pendingSwapInput {
+            self.pendingSwapInput = nil
+            model.isPresentingSelectedAssetInput.wrappedValue = pendingSwapInput
+        }
     }
 
     var body: some View {
@@ -77,6 +85,15 @@ struct WalletNavigationStack: View {
                 request: $model.totalFiatRequest,
                 value: $model.totalFiatValue
             )
+            .task(id: Set(model.assets.map(\.asset.id))) {
+                do {
+                    try await priceObserverService.refreshPrices(for: model.assets.map(\.asset.id))
+                } catch {
+                    if !Task.isCancelled {
+                        debugLog("Wallet price refresh failed: \(error)")
+                    }
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if !model.isPresentingSearch {
@@ -157,7 +174,7 @@ struct WalletNavigationStack: View {
                     )
                 )
             }
-            .sheet(item: $model.isPresentingSelectAssetType) {
+            .sheet(item: $model.isPresentingSelectAssetType, onDismiss: presentPendingSwap) {
                 SelectAssetSceneNavigationStack(
                     model: SelectAssetViewModel(
                         wallet: model.wallet,
@@ -165,7 +182,16 @@ struct WalletNavigationStack: View {
                         searchService: AssetSearchService(assetsService: assetsService),
                         walletsService: walletsService,
                         priceAlertService: priceAlertService,
-                        activityService: activityService
+                        activityService: activityService,
+                        selectAssetAction: { asset in
+                            guard model.isPresentingSelectAssetType == .swap(.pay),
+                                  let account = try? model.wallet.account(for: asset.chain) else { return }
+                            pendingSwapInput = SelectedAssetInput(
+                                type: .swap(asset, nil),
+                                assetAddress: AssetAddress(asset: asset, address: account.address)
+                            )
+                            model.isPresentingSelectAssetType = nil
+                        }
                     ),
                     isPresentingSelectType: $model.isPresentingSelectAssetType
                 )

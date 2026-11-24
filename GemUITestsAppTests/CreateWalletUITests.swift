@@ -21,7 +21,8 @@ final class CreateWalletUITests: XCTestCase {
         // AcceptTermsScene
         app.acceptTerms()
 
-        // SecurityReminderScene
+        XCTAssertFalse(app.buttons["Continue"].firstMatch.isEnabled)
+        app.switches["securityAcknowledgment"].tap()
         app.tapContinue()
 
         // ShowSecretDataScene
@@ -41,7 +42,8 @@ final class CreateWalletUITests: XCTestCase {
         // WalletDetailScene
         app.buttons["Show Secret Phrase"].firstMatch.tap()
 
-        // SecurityReminderScene
+        XCTAssertFalse(app.buttons["Continue"].firstMatch.isEnabled)
+        app.switches["securityAcknowledgment"].tap()
         app.tapContinue()
 
         // ShowSecretDataScene

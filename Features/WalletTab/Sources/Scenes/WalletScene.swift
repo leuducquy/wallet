@@ -8,7 +8,6 @@ import Style
 import InfoSheet
 import PrimitivesComponents
 import Localization
-import Components
 public struct WalletScene: View {
     private var model: WalletSceneViewModel
 
@@ -19,106 +18,72 @@ public struct WalletScene: View {
     public var body: some View {
         @Bindable var preferences = model.observablePreferences
 
-        ZStack {
-        
-            BackGroundView()
+        List {
+            Section { } header: {
+                WalletHeaderView(
+                    model: model.walletHeaderModel,
+                    isHideBalanceEnalbed: $preferences.isHideBalanceEnabled,
+                    onHeaderAction: model.onHeaderAction,
+                    onInfoAction: model.onSelectWatchWalletInfo,
+                    onManageAction: model.onSelectManage
+                )
+                .padding(.top, .large)
+            }
+            .cleanListRow()
 
-           
-            List {
-                Section { } header: {
-                    WalletHeaderView(
-                      
-                        model: model.walletHeaderModel,
-                        isHideBalanceEnalbed: $preferences.isHideBalanceEnabled,
-                        onHeaderAction: model.onHeaderAction,
-                        onInfoAction: model.onSelectWatchWalletInfo,
-                        showTwoButton: true,
-                    )
-                    .padding(.top, 100)
-                }
-                .cleanListRow()
-
+            if model.showPerpetuals {
                 Section {
-                    HStack {
-                        Spacer()
-                        RoundButton(
-                            title: "Add Coin",
-                            image:  Images.System.plus,
-                            isEnabled: true
-                        ) {
-                            model.onSelectManage()
-                        }.padding(.trailing, 10)
-//                        Button(action: model.onSelectManage) {
-//                            Images.System.plus
-//                                .foregroundColor(.white)
-//                                .frame(width: 24, height: 24)
-//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                        }
-//                        .frame(width: 40, height: 40)
-//                        .background(Colors.greenLight)
-//                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-//                        .buttonStyle(.plain)
-//                        .accessibilityLabel(Text("Add Coin"))
-                    }
-                    .frame(maxWidth: .infinity)
+                    PerpetualsPreviewView(wallet: model.wallet)
+                } header: {
+                    HeaderNavigationLinkView(
+                        title: model.perpetualsTitle,
+                        destination: Scenes.Perpetuals()
+                    )
                 }
-                .listRowBackground(Color.clear)
-               
-                .cleanListRow()
+            }
 
-                if model.showPerpetuals {
-                    Section {
-                        PerpetualsPreviewView(wallet: model.wallet)
-                    } header: {
-                        HeaderNavigationLinkView(
-                            title: model.perpetualsTitle,
-                            destination: Scenes.Perpetuals()
-                        )
-                    }
+            if let banner = model.walletBannersModel.allBanners.first {
+                Section {
+                    BannerView(
+                        banner: banner,
+                        action: model.onBanner
+                    )
                 }
+                .listRowInsets(.zero)
+            }
 
-                if let banner = model.walletBannersModel.allBanners.first {
-                    Section {
-                        BannerView(
-                            banner: banner,
-                            action: model.onBanner
-                        )
-                    }
-                    .listRowInsets(.zero)
-                }
-
-                if model.showPinnedSection {
-                    Section {
-                        WalletAssetsList(
-                            assets: model.sections.pinned,
-                            currencyCode: model.currencyCode,
-                            onHideAsset: model.onHideAsset,
-                            onPinAsset: model.onPinAsset,
-                            onCopyAddress: model.onCopyAddress,
-                            showBalancePrivacy: $preferences.isHideBalanceEnabled
-                        )
-                        .listRowInsets(.assetListRowInsets).cleanListRow()
-                    } header: {
-                        HStack {
-                            model.pinImage
-                            Text(model.pinnedTitle)
-                        }
-                    }
-                }
-
-               
-
+            if model.showPinnedSection {
                 Section {
                     WalletAssetsList(
-                        assets: model.sections.assets,
+                        assets: model.sections.pinned,
                         currencyCode: model.currencyCode,
                         onHideAsset: model.onHideAsset,
                         onPinAsset: model.onPinAsset,
                         onCopyAddress: model.onCopyAddress,
                         showBalancePrivacy: $preferences.isHideBalanceEnabled
                     )
-                    .listRowInsets(.assetListRowInsets) .background(Color.clear).cleanListRow()
+                    .listRowInsets(.assetListRowInsets).cleanListRow()
+                } header: {
+                    HStack {
+                        model.pinImage
+                        Text(model.pinnedTitle)
+                    }
                 }
+            }
+
+
+
+            Section {
+                WalletAssetsList(
+                    assets: model.sections.assets,
+                    currencyCode: model.currencyCode,
+                    onHideAsset: model.onHideAsset,
+                    onPinAsset: model.onPinAsset,
+                    onCopyAddress: model.onCopyAddress,
+                    showBalancePrivacy: $preferences.isHideBalanceEnabled
+                )
+                .listRowInsets(.assetListRowInsets) .background(Color.clear).cleanListRow()
+            }
 //                footer: {
 //                    ListButton(
 //                        title: model.manageTokenTitle,
@@ -128,14 +93,10 @@ public struct WalletScene: View {
 //                    .padding(.medium)
 //                    .frame(maxWidth: .infinity)
 //                }
-            }
-            .safeAreaInset(edge: .bottom) {
-                Color.clear.frame(height: 40)
-            }
-            .ignoresSafeArea(.keyboard)
-            .scrollContentBackground(.hidden)
-            .background(Color.clear)
-            
+        }
+        .scrollContentBackground(.hidden)
+        .background {
+            BackGroundView()
         }
         .refreshable {
             model.fetch()

@@ -3,6 +3,7 @@
 import Foundation
 import Style
 
+@Observable
 final class TermItemViewModel: Identifiable {
     let message: String
     var style: TextStyle {

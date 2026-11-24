@@ -29,7 +29,7 @@ public extension WalletService {
             keystore: KeystoreMock(),
             preferences: .mock(
                 preferences: .mock(
-                    defaults: .mockWithValues(values: ["is_accepted_terms": isAcceptedTerms])
+                    defaults: .mockWithValues(values: ["is_accepted_terms_and_privacy_policy": isAcceptedTerms])
                 )
             )
         )

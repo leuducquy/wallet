@@ -19,6 +19,15 @@ struct AcceptTermsScene: View {
             CalloutView(style: .header(title: model.message))
                 .cleanListRow()
             
+            Section {
+                SafariNavigationLink(url: model.termsAndServicesURL) {
+                    Text(Localized.Settings.termsOfServices)
+                }
+                SafariNavigationLink(url: model.privacyPolicyURL) {
+                    Text(Localized.Settings.privacyPolicy)
+                }
+            }
+
             ForEach($model.items) { $item in
                 Section {
                     Toggle(isOn: $item.isConfirmed) {
@@ -34,7 +43,7 @@ struct AcceptTermsScene: View {
             StateButton(
                 text: Localized.Onboarding.AcceptTerms.continue,
                 type: .primary(model.state),
-                action: { model.onNext?() }
+                action: model.onAccept
             )
             .frame(maxWidth: .scene.button.maxWidth)
             .padding(.bottom, .scene.bottom)
@@ -43,6 +52,5 @@ struct AcceptTermsScene: View {
         .listSectionSpacing(.custom(.medium))
         .navigationTitle(model.title)
         .toolbarTitleDisplayMode(.inline)
-        .toolbarInfoButton(url: model.termsAndServicesURL)
     }
 }

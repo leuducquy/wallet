@@ -165,12 +165,12 @@ extension WalletSceneViewModel {
     }
 
     func onHeaderAction(type: HeaderButtonType) {
-        let selectType: SelectAssetType = switch type {
+        let selectType: SelectAssetType? = switch type {
         case .buy: .buy
         case .send: .send
         case .receive: .receive(.asset)
-        case .sell, .swap, .more, .stake, .deposit, .withdraw:
-            fatalError()
+        case .swap: .swap(.pay)
+        case .sell, .more, .stake, .deposit, .withdraw: nil
         }
         isPresentingSelectAssetType = selectType
     }

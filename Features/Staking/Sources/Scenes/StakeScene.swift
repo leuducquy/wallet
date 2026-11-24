@@ -111,6 +111,7 @@ extension StakeScene {
               
             case .error(let error):
                 ListItemErrorView(errorTitle: Localized.Errors.errorOccured, error: error)
+                    .environment(\.colorScheme, .dark)
             }
         }.textStyle(.whiteText)
     }

@@ -25,6 +25,23 @@ import Components
 @MainActor
 struct ConfirmTransferSceneViewModelTests {
 
+    @Test(arguments: [
+        TransferDataType.swap(.mockEthereum(), .mockEthereumUSDT(), .mock()),
+        .stake(.mock(), .stake(.mock()))
+    ])
+    func transactionRequiresRiskAcceptance(type: TransferDataType) {
+        let model = ConfirmTransferSceneViewModel.mock(data: .mock(type: type))
+        model.state = .data(.mock(transactionData: .mock()))
+
+        model.confirmButtonModel.action()
+
+        #expect(model.isPresentingAlertMessage?.actions.map(\.title) == [
+            Localized.Common.cancel,
+            Localized.Consent.acceptAndConfirm
+        ])
+        #expect(model.confirmingState.isLoading == false)
+    }
+
     @Test
     func itemModelReturnsNonEmpty() {
         let model = ConfirmTransferSceneViewModel.mock()
@@ -351,13 +368,14 @@ private extension ConfirmTransferSceneViewModel {
 
 private extension TransactionInputViewModel {
     static func mock(
+        transactionData: TransactionData? = nil,
         validation: TransferAmountValidation = TransferAmountValidation.success(
             TransferAmount(value: BigInt(100), networkFee: BigInt(21000), useMaxAmount: false)
         )
     ) -> TransactionInputViewModel {
         TransactionInputViewModel(
             data: .mock(),
-            transactionData: nil,
+            transactionData: transactionData,
             metaData: nil,
             transferAmount: validation
         )

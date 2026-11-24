@@ -27,7 +27,7 @@ public final class Preferences: @unchecked Sendable {
         static let authenticationLockOption = "authentication_lock_option"
         static let isDeveloperEnabled = "is_developer_enabled"
         static let isHideBalanceEnabled = "is_balance_privacy_enabled"
-        static let isAcceptTermsCompleted = "is_accepted_terms"
+        static let isAcceptTermsCompleted = "is_accepted_terms_and_privacy_policy"
         static let skippedReleaseVersion = "skipped_release_version"
         static let isWalletConnectActivated = "is_walletconnect_activated"
         static let perpetualsMarketsUpdatedAt = "perpetual_markets_updated_at"

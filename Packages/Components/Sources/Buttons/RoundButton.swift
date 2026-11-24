@@ -28,15 +28,14 @@ public struct RoundButton: View {
             VStack(alignment: .center) {
                 image
                     .font(.system(size: 20).weight(.medium))
-                    .foregroundStyle(Colors.whiteSolid)
+                    .foregroundStyle(Color(red: 0.12, green: 0.22, blue: 0.20))
                     .frame(size: 48)
-                    .background(Colors.greenLight)
+                    .background(Color(red: 0.90, green: 0.97, blue: 0.94))
                     .clipShape(Circle())
                     .opacity(isEnabled ? 1 : 0.5)
-                    .liquidGlass()
                 Text(title)
                     .allowsTightening(true)
-                    .truncationMode(.tail)
+                    .minimumScaleFactor(0.75)
                     .foregroundStyle(Colors.white)
                     .font(.system(size: 16).weight(.medium))
                     .lineLimit(1)

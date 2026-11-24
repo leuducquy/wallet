@@ -8,6 +8,8 @@ import GemAPI
 import Blockchain
 
 public struct StakeService: StakeServiceable {
+    private static let solanaFallbackURL = URL(string: "https://api.mainnet-beta.solana.com")!
+
     private let store: StakeStore
     private let addressStore: AddressStore
     private let chainServiceFactory: ChainServiceFactory
@@ -63,12 +65,12 @@ extension StakeService {
     private func updateValidators(chain: Chain) async throws {
         let apr = try stakeApr(assetId: chain.assetId) ?? 0
 
-        async let getValidators = chainServiceFactory.service(for: chain).getValidators(apr: apr)
-        async let getValidatorsList = assetsService.getValidators(chain: chain)
+        async let getValidators = readStaking(chain: chain) { try await $0.getValidators(apr: apr) }
+        async let getValidatorsList = try? assetsService.getValidators(chain: chain)
 
         let (validators, validatorsList) = try await (
             getValidators,
-            getValidatorsList.toMap { $0.id }
+            (getValidatorsList ?? []).toMap { $0.id }
         )
 
         let updateValidators = validators.map {
@@ -109,7 +111,18 @@ extension StakeService {
     }
 
     private func getDelegations(chain: Chain, address: String) async throws -> [DelegationBase] {
-        let service = chainServiceFactory.service(for: chain)
-        return try await service.getStakeDelegations(address: address)
+        try await readStaking(chain: chain) { try await $0.getStakeDelegations(address: address) }
+    }
+
+    private func readStaking<Value>(
+        chain: Chain,
+        operation: (any ChainServiceable) async throws -> Value
+    ) async throws -> Value {
+        do {
+            return try await operation(chainServiceFactory.service(for: chain))
+        } catch where chain == .solana && !Task.isCancelled {
+            let fallback = Blockchain.ChainService.service(chain: chain, with: Self.solanaFallbackURL)
+            return try await operation(fallback)
+        }
     }
 }

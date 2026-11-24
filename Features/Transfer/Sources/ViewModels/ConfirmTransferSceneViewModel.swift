@@ -245,17 +245,43 @@ extension ConfirmTransferSceneViewModel {
         )
     }
     private func onSelectConfirmTransfer() {
-        guard let value = state.value,
+        guard !confirmingState.isLoading, confirmingState.value == nil else { return }
+
+        let warning: (title: String, message: String)
+        switch data.type {
+        case .swap:
+            warning = (Localized.Consent.swapTitle, Localized.Consent.swapMessage)
+        case .stake:
+            warning = (Localized.Consent.stakeTitle, Localized.Consent.stakeMessage)
+        default:
+            confirmTransfer()
+            return
+        }
+
+        isPresentingAlertMessage = AlertMessage(
+            title: warning.title,
+            message: warning.message,
+            actions: [
+                .cancel(title: Localized.Common.cancel),
+                AlertAction(title: Localized.Consent.acceptAndConfirm) { [weak self] in
+                    Task { @MainActor in
+                        self?.confirmTransfer()
+                    }
+                }
+            ]
+        )
+    }
+
+    private func confirmTransfer() {
+        guard !confirmingState.isLoading,
+              confirmingState.value == nil,
+              let value = state.value,
+              value.isReady,
               let transactionData = value.transactionData,
               case .success(let amount) = value.transferAmount
         else { return }
-        confirmTransfer(transactionData: transactionData, amount: amount)
-    }
 
-    private func confirmTransfer(
-        transactionData: TransactionData,
-        amount: TransferAmount
-    ) {
+        confirmingState = .loading
         Task {
             await processConfirmation(
                 transactionData: transactionData,
@@ -305,7 +331,6 @@ extension ConfirmTransferSceneViewModel {
     }
 
     private func processConfirmation(transactionData: TransactionData, amount: TransferAmount) async {
-        confirmingState = .loading
         do {
             let input = TransferConfirmationInput(
                 data: state.value!.data,

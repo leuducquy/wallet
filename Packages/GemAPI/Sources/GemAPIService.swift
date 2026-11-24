@@ -295,6 +295,10 @@ extension GemAPIService: GemAPIMarketService {
 }
 
 extension GemAPIService: GemAPIPricesService {
+    public func getFiatRates() async throws -> [FiatRate] {
+        try await provider.request(.getFiatRates).mapResponse(as: [FiatRate].self)
+    }
+
     public func getPrices(currency: String?, assetIds: [AssetId]) async throws -> [AssetPrice] {
         try await provider
             .request(.getPrices(AssetPricesRequest(currency: currency, assetIds: assetIds)))

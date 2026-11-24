@@ -25,8 +25,7 @@ public struct AssetScene: View {
                         model: model.assetHeaderModel,
                         isHideBalanceEnalbed: .constant(false),
                         onHeaderAction: model.onSelectHeader,
-                        onInfoAction: model.onSelectWalletHeaderInfo,
-                        showTwoButton: false,
+                        onInfoAction: model.onSelectWalletHeaderInfo
                     )
                     .padding(.top, .small)
                     .padding(.bottom, .medium)

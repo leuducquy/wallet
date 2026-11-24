@@ -46,7 +46,7 @@ extension WalletHeaderViewModel: HeaderViewModel {
         [
             HeaderButton(type: .send, isEnabled: bannerEventsViewModel.isButtonsEnabled),
             HeaderButton(type: .receive, isEnabled: bannerEventsViewModel.isButtonsEnabled),
-            HeaderButton(type: .buy, isEnabled: bannerEventsViewModel.isButtonsEnabled)
+            HeaderButton(type: .swap, isEnabled: bannerEventsViewModel.isButtonsEnabled)
         ]
     }
 }

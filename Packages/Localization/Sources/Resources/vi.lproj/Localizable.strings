@@ -33,8 +33,8 @@
 "wallet.import.address_field" = "Địa chỉ hoặc Tên";
 "common.back" = "Back";
 "transfer.memo" = "Memo";
-"settings.terms_of_services" = "Terms of Services";
-"settings.privacy_policy" = "Privacy Policy";
+"settings.terms_of_services" = "Điều khoản dịch vụ";
+"settings.privacy_policy" = "Chính sách quyền riêng tư";
 "settings.title" = "Settings";
 "settings.developer" = "Developer";
 "settings.version" = "Version";
@@ -399,8 +399,8 @@
 "onboarding.accept_terms.message" = "Vui lòng đọc và đồng ý với các điều khoản sau trước khi tiếp tục.";
 "onboarding.accept_terms.item1.message" = "Tôi hiểu rằng tôi là người duy nhất chịu trách nhiệm về tính bảo mật và sao lưu ví của mình, không phải Gem.";
 "onboarding.accept_terms.item2.message" = "Tôi hiểu rằng Gem không phải là ngân hàng hay sàn giao dịch và việc sử dụng Gem cho mục đích bất hợp pháp là hoàn toàn bị nghiêm cấm.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
-"onboarding.accept_terms.continue" = "Agree and Continue";
+"onboarding.accept_terms.item3.message" = "Tôi hiểu rằng nếu mất quyền truy cập vào ví, Gem không chịu trách nhiệm và không thể giúp tôi khôi phục quyền truy cập.";
+"onboarding.accept_terms.continue" = "Đồng ý và tiếp tục";
 "errors.required" = "%@ là bắt buộc";
 "asset.verification.unverified" = "Chưa được xác minh";
 "asset.verification.suspicious" = "Khả nghi";
@@ -541,3 +541,9 @@
 "rewards.create_referral_code.title" = "Create Username";
 "rewards.create_referral_code.info" = "This will be your personal username.";
 "rewards.username" = "Username";
+"consent.policies" = "Tôi đã đọc và đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư.";
+"consent.accept_and_confirm" = "Đồng ý và xác nhận";
+"consent.swap.title" = "Rủi ro khi hoán đổi";
+"consent.swap.message" = "Số lượng nhận được có thể thay đổi trong giới hạn trượt giá. Bạn có thể mất phí mạng ngay cả khi hoán đổi thất bại. Hãy kiểm tra số lượng nhận tối thiểu và các khoản phí trước khi xác nhận. Giao dịch hoán đổi đã hoàn tất không thể đảo ngược.";
+"consent.stake.title" = "Rủi ro khi staking";
+"consent.stake.message" = "Staking có thể khóa tài sản và việc rút tài sản có thể cần thời gian chờ. Phần thưởng có thể thay đổi. Một số mạng phạt trình xác thực vi phạm bằng cách khấu trừ tài sản đã stake. Hãy kiểm tra thao tác và phí mạng trước khi xác nhận.";

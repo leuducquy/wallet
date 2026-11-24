@@ -3,6 +3,7 @@
 import Foundation
 import Primitives
 import Preferences
+import GemAPI
 import WebSocketClient
 
 public actor PriceObserverService: Sendable {
@@ -61,6 +62,16 @@ public actor PriceObserverService: Sendable {
         )
         try await sendAction(action)
         subscribedAssetIds.formUnion(newAssets)
+    }
+
+    public func refreshPrices(for assetIds: [AssetId]) async throws {
+        guard !assetIds.isEmpty else { return }
+        async let prices = GemAPIService.shared.getPrices(currency: Currency.usd.rawValue, assetIds: assetIds)
+        async let rates = GemAPIService.shared.getFiatRates()
+        let (priceValues, rateValues) = try await (prices, rates)
+        try Task.checkCancellation()
+        try priceService.addRates(rateValues)
+        try priceService.updatePrices(priceValues, currency: preferences.currency)
     }
 
     public func subscribeAssets() -> Set<AssetId> {
