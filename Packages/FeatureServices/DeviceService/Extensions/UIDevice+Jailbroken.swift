@@ -55,9 +55,10 @@ private struct JailBrokenHelper {
     }
 
     static func canEditSystemFiles() -> Bool {
-        let jailBreakText = "Developer Insider"
+        let probe = URL(fileURLWithPath: "/private").appendingPathComponent(UUID().uuidString)
         do {
-            try jailBreakText.write(toFile: jailBreakText, atomically: true, encoding: .utf8)
+            try Data().write(to: probe, options: .withoutOverwriting)
+            try? FileManager.default.removeItem(at: probe)
             return true
         } catch {
             return false
@@ -116,25 +117,31 @@ private struct JailBrokenHelper {
     }
 
     static func isFridaRunning() -> Bool {
-       func swapBytesIfNeeded(port: in_port_t) -> in_port_t {
-           let littleEndian = Int(OSHostByteOrder()) == OSLittleEndian
-           return littleEndian ? _OSSwapInt16(port) : port
-       }
+        let socketFD = socket(AF_INET, SOCK_STREAM, 0)
+        guard socketFD >= 0 else { return false }
+        defer { close(socketFD) }
 
-       var serverAddress = sockaddr_in()
-       serverAddress.sin_family = sa_family_t(AF_INET)
-       serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1")
-       serverAddress.sin_port = swapBytesIfNeeded(port: in_port_t(27042))
-       let sock = socket(AF_INET, SOCK_STREAM, 0)
+        guard fcntl(socketFD, F_SETFL, O_NONBLOCK) != -1 else { return false }
 
-       let result = withUnsafePointer(to: &serverAddress) {
-           $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
-               connect(sock, $0, socklen_t(MemoryLayout<sockaddr_in>.stride))
-           }
-       }
-       if result != -1 {
-           return true
-       }
-       return false
+        var address = sockaddr_in()
+        address.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        address.sin_family = sa_family_t(AF_INET)
+        address.sin_addr.s_addr = inet_addr("127.0.0.1")
+        address.sin_port = in_port_t(27042).bigEndian
+
+        let result = withUnsafePointer(to: &address) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                connect(socketFD, $0, socklen_t(MemoryLayout<sockaddr_in>.size))
+            }
+        }
+        if result == 0 { return true }
+        guard errno == EINPROGRESS else { return false }
+
+        var descriptor = pollfd(fd: socketFD, events: Int16(POLLOUT), revents: 0)
+        guard poll(&descriptor, 1, 100) > 0 else { return false }
+
+        var socketError: Int32 = 0
+        var length = socklen_t(MemoryLayout<Int32>.size)
+        return getsockopt(socketFD, SOL_SOCKET, SO_ERROR, &socketError, &length) == 0 && socketError == 0
     }
 }

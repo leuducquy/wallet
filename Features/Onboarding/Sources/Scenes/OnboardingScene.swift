@@ -4,53 +4,48 @@ import SwiftUI
 import Style
 import Components
 
-public struct OnboardingScene: OverlayView {
-   
-    
+public struct OnboardingScene: View {
     private let model: OnboardingViewModel
 
     public init(model: OnboardingViewModel) {
         self.model = model
     }
 
-    public var content: some View {
-        ZStack {
-            // Background
-//            Image("splashscreen")
-//                .resizable()
-//                .scaledToFill()
-//                .ignoresSafeArea()
-            VStack {
-                Spacer()
-                VStack(alignment: .center, spacing: 24) {
-                  
-                    PrimaryGradientButton(title:  model.createWalletTitle, isDisabled: false) {
-                        model.onCreateWallet()
-                    }
-                    .padding(.horizontal, 10)
+    public var body: some View {
+        VStack {
+            Spacer()
 
-                    
-//                    StateButton(
-//                        text: model.createWalletTitle,
-//                        action: model.onCreateWallet,
-//                      
-//                        
-//                    )
-                    PrimaryGradientButton(title:  model.importWalletTitle, isDisabled: false) {
-                        model.onImportWallet()
-                    }
-                    .padding(.horizontal, 10)
-                   
+            VStack(spacing: Spacing.large) {
+                PrimaryGradientButton(title: model.createWalletTitle, isDisabled: false) {
+                    model.onCreateWallet()
                 }
-                .frame(maxWidth: .scene.button.maxWidth)
-                .padding(.scene.bottom * 6)
+
+                PrimaryGradientButton(title: model.importWalletTitle, isDisabled: false) {
+                    model.onImportWallet()
+                }
             }
-            
-            .frame(maxWidth: .infinity)
-            
-            .navigationTitle(model.title)
-        }.overlay(
+            .frame(maxWidth: .scene.button.maxWidth)
+            .padding(.horizontal, Spacing.medium)
+            .padding(.bottom, Spacing.large)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            GeometryReader { geometry in
+                Image("splashscreen")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
+            }
+            .ignoresSafeArea()
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+        }
+        .overlay {
             LogoView()
-        )
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
+        .navigationTitle(model.title)
     }
 }
