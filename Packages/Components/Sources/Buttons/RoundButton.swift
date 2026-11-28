@@ -36,7 +36,7 @@ public struct RoundButton: View {
                 Text(title)
                     .allowsTightening(true)
                     .minimumScaleFactor(0.75)
-                    .foregroundStyle(Colors.white)
+                    .foregroundStyle(Colors.whiteText)
                     .font(.system(size: 16).weight(.medium))
                     .lineLimit(1)
             }

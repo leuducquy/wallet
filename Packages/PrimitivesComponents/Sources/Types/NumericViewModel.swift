@@ -52,7 +52,7 @@ public struct NumericViewModel: Sendable, AmountDisplayable {
         )
         let style = style.textStyle ?? TextStyle(
             font: .footnote,
-            color: Colors.gray,
+            color: Colors.secondaryText,
             fontWeight: .medium
         )
 

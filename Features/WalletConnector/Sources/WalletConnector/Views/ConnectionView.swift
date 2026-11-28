@@ -25,7 +25,7 @@ public struct ConnectionView: View {
                 if let host = model.hostText {
                     Text(host)
                         .font(.callout)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Colors.secondaryText)
                         .lineLimit(1)
                 }
             }

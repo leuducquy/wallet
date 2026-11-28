@@ -60,6 +60,9 @@ extension LockWindowManager {
     private func makeOverlayWindow(in scene: UIWindowScene) -> UIWindow {
         let host = UIHostingController(rootView: LockScreenScene(model: lockModel))
         let window = UIWindow(windowScene: scene)
+        if ProcessInfo.processInfo.isiOSAppOnMac {
+            window.overrideUserInterfaceStyle = .dark
+        }
         window.rootViewController = host
         window.windowLevel = .alert + 1
         window.backgroundColor = .clear

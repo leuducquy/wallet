@@ -39,7 +39,7 @@ public struct ChartPriceView: View {
                 if let date {
                     Text(date)
                         .font(.footnote)
-                        .foregroundColor(Colors.gray)
+                        .foregroundColor(Colors.secondaryText)
                 }
             }.frame(height: 16)
         }

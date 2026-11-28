@@ -13,9 +13,6 @@ struct ShowSecretDataScene: View {
     @State private var isPresentingCopyToast = false
 
     var body: some View {
-        ZStack {
-            BackGroundView()
-       
         List {
             if let calloutViewStyle = model.calloutViewStyle {
                 Section {
@@ -37,7 +34,7 @@ struct ShowSecretDataScene: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .cleanListRow()
         }
-        .safeAreaView {
+        .safeAreaInset(edge: .bottom) {
             if model.continueAction != nil {
                 StateButton(
                     text: Localized.Common.continue,
@@ -49,7 +46,7 @@ struct ShowSecretDataScene: View {
         }
         .contentMargins([.top], .extraSmall, for: .scrollContent)
         .listSectionSpacing(.custom(.medium))
-       // .toolbarInfoButton(url: model.docsUrl)
+        .background { BackGroundView() }
         .navigationTitle(model.title)
         .copyToast(
             model: model.copyModel,
@@ -57,7 +54,6 @@ struct ShowSecretDataScene: View {
         )
         .detectScreenshots(docsUrl: model.docsUrl)
         .protectFromScreenRecording()
-    }
     }
     
     private func copy() {

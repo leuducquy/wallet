@@ -99,7 +99,7 @@ struct CandlestickChartView: View {
                 AxisTick(stroke: StrokeStyle(lineWidth: ChartGridStyle.lineWidth))
                     .foregroundStyle(ChartGridStyle.color)
                 AxisValueLabel()
-                    .foregroundStyle(Colors.gray)
+                    .foregroundStyle(Colors.secondaryText)
                     .font(.caption2)
             }
         }

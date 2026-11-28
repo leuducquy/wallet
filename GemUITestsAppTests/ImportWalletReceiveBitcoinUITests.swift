@@ -30,7 +30,9 @@ final class ImportWalletReceiveBitcoinUITests: XCTestCase {
         app.buttons["Import"].firstMatch.tap()
 
         // WalletScene
-        app.buttons["receive_button"].firstMatch.tap()
+        let receive = app.buttons["receive_button"].firstMatch
+        XCTAssertTrue(receive.waitForExistence(timeout: 30))
+        receive.tap()
 
         // SelectAssetScene
         app.buttons["Bitcoin, BTC"].firstMatch.tap()

@@ -107,7 +107,7 @@ struct ChartView: View {
                             let x = calculateX(x: lowerBoundX, maxWidth: maxWidth, geoWidth: geo.size.width)
                             Text(model.lowerBoundValueText)
                                 .font(.caption2)
-                                .foregroundColor(Colors.gray)
+                                .foregroundColor(Colors.secondaryText)
                                 .frame(width: maxWidth)
                                 .offset(x: x, y: chartBounds.maxY + .small) // Plus spacing (8px) below chart
                         }
@@ -118,7 +118,7 @@ struct ChartView: View {
                             
                             Text(model.upperBoundValueText)
                                 .font(.caption2)
-                                .foregroundColor(Colors.gray)
+                                .foregroundColor(Colors.secondaryText)
                                 .frame(width: maxWidth)
                                 .offset(x: x, y: chartBounds.minY - .large) // Minus text height (~16px) + spacing (8px)
                         }

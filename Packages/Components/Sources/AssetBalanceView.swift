@@ -31,7 +31,7 @@ public struct AssetBalanceView<SecondaryView: View>: View {
                         .textStyle(.whiteText.weight(.semibold))
                     if let balance {
                         Text(balance)
-                            .textStyle(TextStyle(font: .callout, color: Colors.white, fontWeight: .medium))
+                            .textStyle(TextStyle(font: .callout, color: Colors.whiteText, fontWeight: .medium))
                     }
                 }
                 .lineLimit(1)

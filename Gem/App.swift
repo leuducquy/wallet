@@ -61,6 +61,7 @@ struct GemApp: App {
             .inject(resolver: resolver)
             .navigationBarTitleDisplayMode(.inline)
             .tint(Colors.black)
+            .preferredColorScheme(ProcessInfo.processInfo.isiOSAppOnMac ? .dark : nil)
         }
     }
 }

@@ -2,6 +2,7 @@
 
 import SwiftUI
 import Primitives
+import Style
 
 struct PerpetualSectionView: View {
     let perpetuals: [PerpetualData]
@@ -24,7 +25,7 @@ struct PerpetualSectionView: View {
     var body: some View {
         if perpetuals.isEmpty, let emptyText {
             Text(emptyText)
-                .foregroundColor(.secondary)
+                .foregroundColor(Colors.secondaryText)
         } else {
             ForEach(perpetuals) { perpetualData in
                 PerpetualListItem(

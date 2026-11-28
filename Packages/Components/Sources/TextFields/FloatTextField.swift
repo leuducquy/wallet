@@ -21,8 +21,8 @@ public struct FloatFieldStyle {
     public static var standard: FloatFieldStyle {
         FloatFieldStyle(
             placeholderScale: 0.8,
-            placeholderColor: Colors.gray,
-            activePlaceholderColor: Colors.grayLight
+            placeholderColor: Colors.secondaryText,
+            activePlaceholderColor: ProcessInfo.processInfo.isiOSAppOnMac ? Colors.secondaryText : Colors.grayLight
         )
     }
 }

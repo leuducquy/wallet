@@ -32,8 +32,8 @@ public struct AsyncImageView: View {
                 Text(String(character).capitalized)
                     .fontWeight(.semibold)
                     .frame(width: size, height: size)
-                    .foregroundColor(Colors.white)
-                    .background(Colors.grayLight)
+                    .foregroundColor(Colors.whiteText)
+                    .background(ProcessInfo.processInfo.isiOSAppOnMac ? Colors.grayBackground : Colors.grayLight)
             }
         }
         .frame(width: size, height: size)

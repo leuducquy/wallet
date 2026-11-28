@@ -98,7 +98,7 @@ extension SwapProviderItem: SimpleListItemViewable {
     }
     
     public var subtitleStyleExtra: TextStyle {
-        TextStyle(font: .footnote, color: Colors.gray)
+        TextStyle(font: .footnote, color: Colors.secondaryText)
     }
 }
 

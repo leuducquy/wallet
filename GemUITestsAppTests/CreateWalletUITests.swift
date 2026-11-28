@@ -9,7 +9,7 @@ final class CreateWalletUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testImportWalletAndReceiveBitcoin() throws {
+    func testCreateWalletAndVerifyRecoveryPhrase() throws {
         let app = XCUIApplication()
         setupPermissionHandler()
         app.launch()
@@ -30,11 +30,15 @@ final class CreateWalletUITests: XCTestCase {
         app.tapContinue()
 
         // VerifyPhraseWalletScene
-        words.forEach { app.buttons[$0].firstMatch.tap() }
+        for word in words {
+            let choice = app.buttons.matching(identifier: word).allElementsBoundByIndex.first(where: \.isEnabled)
+            try XCTUnwrap(choice).tap()
+        }
+        XCTAssertTrue(app.buttons["Continue"].firstMatch.isEnabled)
         app.tapContinue()
 
-        // WalletScene
-        app.tapWalletBar()
+        // SettingsScene
+        app.openWallets()
 
         // WalletsScene
         app.buttons["gearshape"].firstMatch.tap()

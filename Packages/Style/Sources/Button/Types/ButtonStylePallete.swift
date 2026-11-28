@@ -60,7 +60,7 @@ extension ButtonStylePalette {
     )
 
     static let lightGray = ButtonStylePalette(
-        foreground: Colors.gray,
+        foreground: Colors.secondaryText,
         foregroundPressed: Colors.whiteSolid,
         background: Colors.grayVeryLight,
         backgroundPressed: Colors.grayLightFaded,
@@ -92,7 +92,7 @@ extension ButtonStylePalette {
     )
 
     static let listStyleColor = ButtonStylePalette(
-        foreground: Colors.gray,
+        foreground: Colors.secondaryText,
         foregroundPressed: Colors.whiteSolid,
         background: Colors.listStyleColor,
         backgroundPressed: Colors.grayVeryLight,
@@ -116,7 +116,7 @@ extension ButtonStylePalette {
     )
 
     static let listEmpty = ButtonStylePalette(
-        foreground: Colors.gray,
+        foreground: Colors.secondaryText,
         foregroundPressed: Colors.black,
         background: Colors.Empty.listEmpty,
         backgroundPressed: Colors.Empty.listEmpty,

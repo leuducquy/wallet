@@ -51,7 +51,7 @@ public struct WalletHeaderView: View {
             .minimumScaleFactor(0.5)
             .font(.system(size: 42))
             .fontWeight(.semibold)
-            .foregroundStyle(Colors.white)
+            .foregroundStyle(Colors.whiteText)
             .lineLimit(1)
             .padding(.bottom, .space10)
 
@@ -62,7 +62,7 @@ public struct WalletHeaderView: View {
                 )
                 .font(.system(size: 16))
                 .fontWeight(.medium)
-                .foregroundStyle(Colors.white)
+                .foregroundStyle(Colors.whiteText)
                 .numericTransition(for: model.subtitle)
                 .padding(.bottom, .space10)
             }
@@ -77,10 +77,10 @@ public struct WalletHeaderView: View {
 
                         Text(Localized.Wallet.Watch.Tooltip.title)
                             .foregroundColor(Colors.black)
-                            .font(.callout).tint(Colors.white)
+                            .font(.callout).tint(Colors.whiteText)
 
                         Images.System.info
-                            .tint(Colors.white)
+                            .tint(Colors.whiteText)
                     }
                     .padding()
                     .background(Colors.grayDarkBackground)

@@ -3,6 +3,7 @@ import SwiftUI
 public struct Colors {
     public static let white = Color.dynamicColor("#FFFFFF", dark: "#222222")
     public static let whiteSolid = Color.dynamicColor("FFFFFF")
+    public static let whiteText = ProcessInfo.processInfo.isiOSAppOnMac ? whiteSolid : white
     public static let black = Color.dynamicColor("#222222", dark: "FFFFFF")
     public static let blue = Color.dynamicColor("#2D5BE6")
     public static let blueDark = Color.dynamicColor("#1742C5")
@@ -16,7 +17,7 @@ public struct Colors {
     public static let grayVeryLight = Color.dynamicColor("#F4F4F4", dark: "#333333")
     public static let grayBackground = Color.dynamicColor("#F2F2F7", dark: "#1C1C1E")
     public static let grayDarkBackground = Color.dynamicColor("#E6E6F0", dark: "#1C1C1E")
-    public static let secondaryText = Color.dynamicColor("#818181")
+    public static let secondaryText = ProcessInfo.processInfo.isiOSAppOnMac ? whiteSolid : Color.dynamicColor("#818181")
     public static let listStyleColor = UIColor.dynamicColor(UIColor.systemBackground.color, dark: UIColor.secondarySystemBackground.color)
     public static let insetGroupedListStyle = UIColor.dynamicColor(UIColor.systemGroupedBackground.color, dark: UIColor.black.color)
 }

@@ -49,7 +49,7 @@ public struct CurrencyTextField: View {
             }
             TextField(placeholder, text: $text)
                 .keyboardType(keyboardType)
-                .foregroundStyle(Colors.white)
+                .foregroundStyle(Colors.whiteText)
                 .font(.system(size: Constants.fontSize, weight: Constants.fontWeight))
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.plain)

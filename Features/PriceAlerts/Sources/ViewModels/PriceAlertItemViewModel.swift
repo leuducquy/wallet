@@ -45,7 +45,7 @@ public struct PriceAlertItemViewModel: ListAssetItemViewable {
     private var prefixTextValue: TextValue {
         TextValue(
             text: prefixText,
-            style: TextStyle(font: .footnote, color: Colors.gray)
+            style: TextStyle(font: .footnote, color: Colors.secondaryText)
         )
     }
     

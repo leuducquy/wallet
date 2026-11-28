@@ -27,20 +27,28 @@ extension XCUIApplication {
         (0..<12).map { staticTexts["word_\($0)"].label }
     }
     
-    func tapWalletBar() {
-        buttons.element(matching: .button, identifier: "walletBar").tap()
+    func openWallets() {
+        let settings = buttons["Settings"].firstMatch
+        XCTAssertTrue(settings.waitForExistence(timeout: 30))
+        settings.tap()
+
+        let wallets = buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Wallets")).firstMatch
+        XCTAssertTrue(wallets.waitForExistence(timeout: 5))
+        wallets.tap()
     }
     
     func logout() {
         if isOnboarding == false {
-            buttons["Wallet"].firstMatch.tap()
-            tapWalletBar()
+            openWallets()
             // WalletsScene
             buttons["gearshape"].firstMatch.tap()
             // WalletDetailScene
             buttons["Delete"].firstMatch.tap()
             // Delete confirmation alert
-            alerts.buttons["Delete"].tap()
+            let confirmDelete = alerts.buttons["Delete"].firstMatch
+            XCTAssertTrue(confirmDelete.waitForExistence(timeout: 10))
+            confirmDelete.tap()
+            XCTAssertTrue(buttons["Create a New Wallet"].firstMatch.waitForExistence(timeout: 15))
         }
     }
 }

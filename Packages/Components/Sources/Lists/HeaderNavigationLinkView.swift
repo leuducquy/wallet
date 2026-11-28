@@ -19,7 +19,7 @@ public struct HeaderNavigationLinkView<Destination: Hashable>: View {
                 Images.System.chevronRight
                 Spacer()
             }
-            .foregroundColor(Colors.gray)
+            .foregroundColor(Colors.secondaryText)
             .bold()
         }
     }

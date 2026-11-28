@@ -55,7 +55,7 @@ struct VerifyPhraseWalletScene: View {
             }
             .cleanListRow()
         }
-        .safeAreaView {
+        .safeAreaInset(edge: .bottom) {
             StateButton(
                 text: Localized.Common.continue,
                 type: .primary(model.buttonState),

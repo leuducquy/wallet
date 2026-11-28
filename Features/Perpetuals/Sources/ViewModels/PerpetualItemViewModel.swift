@@ -30,7 +30,7 @@ public struct PerpetualItemViewModel: ListAssetItemViewable {
         .price(
             price: TextValue(
                 text: model.priceText,
-                style: TextStyle(font: .footnote, color: Colors.gray)
+                style: TextStyle(font: .footnote, color: Colors.secondaryText)
             ),
             priceChangePercentage24h: TextValue(
                 text: model.priceChangeText,

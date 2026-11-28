@@ -62,7 +62,7 @@ public struct SwapAmountSingleView: View {
                     Text(fiatAmount)
                         .font(.system(size: 12))
                         .fontWeight(.medium)
-                        .foregroundColor(Colors.gray)
+                        .foregroundColor(Colors.secondaryText)
                 }
             }
             Spacer(minLength: .extraLarge)
